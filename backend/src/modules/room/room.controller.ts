@@ -27,7 +27,7 @@ export const createRoom = (req: Request, res: Response) => {
     description,
     location,
     organisationId: "org1",
-    bookings: [],
+    meetings: [],
   };
 
   db.rooms.push(newRoom);

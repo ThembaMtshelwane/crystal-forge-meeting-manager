@@ -5,5 +5,5 @@ export interface IRoom {
   location: string;
   capacity: string;
   organisationId: string;
-  bookings: string[];
+  meetings: string[];
 }
