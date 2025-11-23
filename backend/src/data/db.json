@@ -1,6 +1,54 @@
 {
   "users": [],
-  "rooms": [],
+  "rooms": [
+    {
+      "id": "r1001",
+      "name": "Boardroom Alpha",
+      "description": "Main presentation room with video conferencing equipment and large monitor.",
+      "location": "Main Office - 4th Floor, West Wing",
+      "organisationId": "ORG-A001",
+      "capacity": "4",
+      "bookings": [
+        "b901",
+        "b902",
+        "b905"
+      ]
+    },
+    {
+      "id": "r1002",
+      "name": "Focus Pod 3",
+      "description": "Small, soundproof booth designed for single-person focused work or video calls.",
+      "location": "Main Office - 4th Floor, Quiet Zone",
+      "organisationId": "ORG-A001",
+      "capacity": "8",
+      "bookings": [
+        "b903"
+      ]
+    },
+    {
+      "id": "r1003",
+      "name": "The Commons",
+      "description": "Large, flexible open area for team huddles, informal meetings, and collaboration.",
+      "location": "Main Office - Ground Floor",
+      "organisationId": "ORG-A001",
+      "capacity": "12",
+      "bookings": [
+        "b904",
+        "b906",
+        "b907",
+        "b908"
+      ]
+    },
+    {
+      "id": "r2001",
+      "name": "Training Lab 1",
+      "description": "IT training room equipped with 20 workstations and projector.",
+      "location": "Annex Building - 2nd Floor",
+      "organisationId": "ORG-A002",
+      "capacity": "24",
+      "bookings": []
+    }
+  ],
   "organizations": [],
   "meetings": []
 }

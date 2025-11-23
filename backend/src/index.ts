@@ -2,7 +2,7 @@ import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import express, { Response, Request } from "express";
-import { db } from "./utils/fileDb";
+import roomRouter from "./modules/room/room.routes";
 
 const app = express();
 const PORT = 5000;
@@ -28,10 +28,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    data: db,
-  });
+  res.status(200).json({});
 });
+
+app.use("/api/rooms", roomRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on http://localhost:${PORT}`);
