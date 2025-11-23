@@ -5,12 +5,13 @@ import { db, saveDB } from "../../utils/fileDb";
 import { HttpStatus } from "../../constants/http.codes";
 import { randomUUID } from "crypto";
 import bcrypt from "bcryptjs";
-import { signToken } from "../../utils/jwt";
+import generateToken from "../../utils/generateTokens";
 
 export const register = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { firstName, lastName, email, password, username, organisationId } =
-      req.body;
+    const { firstName, lastName, email, password, username } = req.body;
+
+    // Check if user exists
     const users = (db.users as IUser[]).filter(
       (u) => u.email === email || u.username === username
     );
@@ -22,6 +23,7 @@ export const register = expressAsyncHandler(
       return;
     }
 
+    // Encrypt the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser: IUser = {
@@ -38,28 +40,20 @@ export const register = expressAsyncHandler(
 
     if (!newUser) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        message: "Error: Failed to created a room",
+        message: "Error: Failed to created a user",
       });
       return;
     }
 
+    await generateToken(res, newUser);
     db.users.push(newUser);
     saveDB(db);
 
-    const token = signToken({ id: newUser.id, role: newUser.role });
+    const { password: userPassword, ...responseData } = newUser;
 
     res.status(HttpStatus.CREATED).json({
-      data: {
-        firstName,
-        lastName,
-        email,
-        username,
-        organisationId: newUser.organizationId,
-        role: newUser.role,
-        status: newUser.status,
-      },
-      token,
-      message: "You have successfully added a new room",
+      data: responseData,
+      message: "User registered successfully",
     });
   }
 );
@@ -77,14 +71,16 @@ export const login = expressAsyncHandler(
       res.status(HttpStatus.BAD_REQUEST).json({
         message: "Invalid email or password",
       });
+      return;
     }
 
-    const token = signToken({ id: user.id, role: user.role });
+    await generateToken(res, user);
+
+    const { password: userPassword, ...responseData } = user;
 
     res.status(HttpStatus.OK).json({
       message: "Logged in successfully",
-      token,
-      user,
+      user: responseData,
     });
   }
 );

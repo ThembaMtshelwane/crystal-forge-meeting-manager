@@ -4,7 +4,6 @@ import { Request, Response } from "express";
 import { db, saveDB } from "../../utils/fileDb";
 import type { IUser } from "../../types/user.types";
 
-
 //Get all users
 export const getUsers = expressAsyncHandler(
   async (req: Request, res: Response) => {
@@ -34,10 +33,13 @@ export const getUser = expressAsyncHandler(
     });
   }
 );
+
 //Get logged in user by
 export const getUserProfile = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const userId = "u1001"; // #TODO: Extract from req
+    const userId = req.user?.id;
+    console.log("user  ", req.user);
+
     const user = (db.users as IUser[]).filter((u) => u.id === userId);
     if (!user) {
       res
@@ -51,6 +53,8 @@ export const getUserProfile = expressAsyncHandler(
     });
   }
 );
+
+
 //Update user by id
 export const updateUser = expressAsyncHandler(
   async (req: Request, res: Response) => {

@@ -2,8 +2,9 @@ import { IUser } from "../../types/user.types";
 
 declare global {
   namespace Express {
-    export interface Request {
+    interface Request {
       user?: Pick<IUser, "id" | "role">;
+      s;
     }
   }
 }
