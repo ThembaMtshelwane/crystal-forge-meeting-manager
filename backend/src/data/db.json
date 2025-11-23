@@ -1,5 +1,61 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "u1001",
+      "firstName": "Alice",
+      "lastName": "Mokoena",
+      "email": "alice.mokoena@example.com",
+      "password": "password123",
+      "username": "alice.m",
+      "organizationId": "ORG-A001",
+      "role": "admin",
+      "status": true
+    },
+    {
+      "id": "u1002",
+      "firstName": "Thabo",
+      "lastName": "Nkosi",
+      "email": "thabo.nkosi@example.com",
+      "password": "password123",
+      "username": "thabo.n",
+      "organizationId": "ORG-A001",
+      "role": "member",
+      "status": true
+    },
+    {
+      "id": "u1003",
+      "firstName": "Lindiwe",
+      "lastName": "Dlamini",
+      "email": "lindiwe.dlamini@example.com",
+      "password": "password123",
+      "username": "lindiwe.d",
+      "organizationId": "ORG-A002",
+      "role": "member",
+      "status": false
+    },
+    {
+      "id": "u1004",
+      "firstName": "Sipho",
+      "lastName": "Zuma",
+      "email": "sipho.zuma@example.com",
+      "password": "password123",
+      "username": "sipho.z",
+      "organizationId": "ORG-A002",
+      "role": "admin",
+      "status": true
+    },
+    {
+      "id": "u1005",
+      "firstName": "Nomsa",
+      "lastName": "Khumalo",
+      "email": "nomsa.khumalo@example.com",
+      "password": "password123",
+      "username": "nomsa.k",
+      "organizationId": "ORG-A003",
+      "role": "member",
+      "status": true
+    }
+  ],
   "rooms": [
     {
       "id": "r1001",

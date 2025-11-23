@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import express, { Response, Request } from "express";
 import roomRouter from "./modules/room/room.routes";
+import userRouter from "./modules/user/user.routes";
 
 const app = express();
 const PORT = 5000;
@@ -32,6 +33,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/rooms", roomRouter);
+app.use("/api/users", userRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on http://localhost:${PORT}`);

@@ -53,7 +53,7 @@ export const getRooms = expressAsyncHandler(
       });
       return;
     }
-    res.status(HttpStatus.OK).json(db.rooms);
+    res.status(HttpStatus.OK).json({ data, messgae: "Fetched all rooms" });
   }
 );
 
@@ -66,7 +66,10 @@ export const getRoom = expressAsyncHandler(
       res.status(HttpStatus.NOT_FOUND).json({ message: "Room not found" });
       return;
     }
-    res.status(HttpStatus.OK).json(room);
+    res.status(HttpStatus.OK).json({
+      data: room,
+      message: "Room found",
+    });
   }
 );
 
