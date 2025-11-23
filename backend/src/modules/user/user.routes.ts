@@ -6,12 +6,11 @@ import {
   getUsers,
   updateUser,
 } from "./user.controller";
-import { protect } from "../../middleware/authMiddleware";
 
 const router = Router();
 
 router.get("/", getUsers);
-router.get("/profile", protect, getUserProfile);
+router.get("/profile", getUserProfile);
 router.patch("/deactivate", toogleUserstatus);
 router.route("/:id").get(getUser).patch(updateUser);
 

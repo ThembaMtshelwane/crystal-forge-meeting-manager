@@ -41,7 +41,7 @@
       "password": "password123",
       "username": "sipho.z",
       "organizationId": "ORG-A002",
-      "role": "admin",
+      "role": "member",
       "status": true
     },
     {
@@ -75,11 +75,7 @@
       "location": "Main Office - 4th Floor, West Wing",
       "organisationId": "ORG-A001",
       "capacity": "4",
-      "bookings": [
-        "b901",
-        "b902",
-        "b905"
-      ]
+      "bookings": ["b901", "b902", "b905"]
     },
     {
       "id": "r1002",
@@ -88,9 +84,7 @@
       "location": "Main Office - 4th Floor, Quiet Zone",
       "organisationId": "ORG-A001",
       "capacity": "8",
-      "bookings": [
-        "b903"
-      ]
+      "bookings": ["b903"]
     },
     {
       "id": "r1003",
@@ -99,12 +93,7 @@
       "location": "Main Office - Ground Floor",
       "organisationId": "ORG-A001",
       "capacity": "12",
-      "bookings": [
-        "b904",
-        "b906",
-        "b907",
-        "b908"
-      ]
+      "bookings": ["b904", "b906", "b907", "b908"]
     },
     {
       "id": "r2001",

@@ -5,6 +5,7 @@ import express, { Response, Request } from "express";
 import roomRouter from "./modules/room/room.routes";
 import userRouter from "./modules/user/user.routes";
 import authRouter from "./modules/auth/auth.routes";
+import { protect } from "./middleware/authMiddleware";
 
 const app = express();
 const PORT = 5000;
@@ -34,8 +35,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/rooms", roomRouter);
-app.use("/api/users", userRouter);
+app.use("/api/rooms", protect, roomRouter);
+app.use("/api/users", protect, userRouter);
+app.use("/api/organizations", protect, userRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on http://localhost:${PORT}`);

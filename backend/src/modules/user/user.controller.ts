@@ -2,7 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import { HttpStatus } from "../../constants/http.codes";
 import { Request, Response } from "express";
 import { db, saveDB } from "../../utils/fileDb";
-import type { IUser } from "../../types/user.types";
+import { IUser } from "../../types/user.types";
 
 //Get all users
 export const getUsers = expressAsyncHandler(
@@ -38,22 +38,22 @@ export const getUser = expressAsyncHandler(
 export const getUserProfile = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.user?.id;
-    console.log("user  ", req.user);
 
-    const user = (db.users as IUser[]).filter((u) => u.id === userId);
+    const index = (db.users as IUser[]).findIndex((u) => u.id === userId);
+    const user = (db.users as IUser[])[index];
     if (!user) {
       res
         .status(HttpStatus.NOT_FOUND)
         .json({ message: "User profile not found" });
       return;
     }
+    const { password, ...responseData } = user;
     res.status(HttpStatus.OK).json({
-      data: user,
+      data: responseData,
       message: "User profile found",
     });
   }
 );
-
 
 //Update user by id
 export const updateUser = expressAsyncHandler(
