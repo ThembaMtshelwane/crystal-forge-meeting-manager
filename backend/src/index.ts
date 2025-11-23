@@ -2,13 +2,12 @@ import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import express, { Response, Request } from "express";
+import { db } from "./utils/fileDb";
 
 const app = express();
-
 const PORT = 5000;
 
 const allowedOrigins = ["http://localhost:3000"];
-
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -29,7 +28,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!!!");
+  res.status(200).json({
+    data: db,
+  });
 });
 
 app.listen(PORT, () => {
