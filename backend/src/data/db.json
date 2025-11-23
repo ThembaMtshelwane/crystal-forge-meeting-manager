@@ -54,6 +54,17 @@
       "organizationId": "ORG-A003",
       "role": "member",
       "status": true
+    },
+    {
+      "id": "fff0060d-a7fd-4499-b388-5ffc203f0500",
+      "firstName": "Themba",
+      "lastName": "Mtshelwane",
+      "email": "Themba.mm@example.com",
+      "username": "themba.m",
+      "password": "$2b$10$S.JZvlDANlSPZX07v15YLOQhZXC5HXa.c/v0.MO/K1gtU8L39/X9i",
+      "role": "member",
+      "status": true,
+      "organizationId": "org1"
     }
   ],
   "rooms": [

@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import express, { Response, Request } from "express";
 import roomRouter from "./modules/room/room.routes";
 import userRouter from "./modules/user/user.routes";
+import authRouter from "./modules/auth/auth.routes";
 
 const app = express();
 const PORT = 5000;
@@ -32,6 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({});
 });
 
+app.use("/api/auth", authRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/users", userRouter);
 
