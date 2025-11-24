@@ -1,38 +1,50 @@
 <template>
   <v-app>
-    <v-main class="bg-blue-50">
-      <div class="p-8 flex flex-col items-center justify-center min-h-screen">
-        <v-card
-          class="mx-auto rounded-xl shadow-2xl p-6!"
-          max-width="600"
-          elevation="10"
-        >
-          <h1 class="text-4xl font-extrabold text-blue-700 mb-4">
-            Hello World!
-          </h1>
+    <v-app-bar app color="blue-grey-darken-4" dark class="shadow-lg">
+      <v-toolbar-title class="font-bold"> Vue 3 + TS </v-toolbar-title>
+      <v-spacer></v-spacer>
 
-          <v-btn
-            color="primary"
-            variant="flat"
-            size="large"
-            @click="message = 'Setup is working! 🥳'"
-            class="mt-4"
-          >
-            Click Me to Test State
-          </v-btn>
+      <router-link to="/">
+        <v-btn variant="text" class="text-white hover:bg-gray-700 mx-2">
+          Home
+        </v-btn>
+      </router-link>
+      <router-link to="/about">
+        <v-btn variant="text" class="text-white hover:bg-gray-700 mx-2">
+          About
+        </v-btn>
+      </router-link>
+    </v-app-bar>
 
-          <div
-            class="mt-6 p-4 border-l-4 border-green-500 bg-green-100 text-green-800 text-xl font-medium"
-          >
-            {{ message }}
-          </div>
-        </v-card>
-      </div>
+    <v-main class="bg-gray-100 min-h-screen">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </v-main>
   </v-app>
 </template>
 
-<script setup>
-import { ref } from "vue";
-const message = ref("If you see this, Vue is running.");
+<script setup lang="ts">
+// Vue Router components are globally available after app.use(router)
 </script>
+
+<style scoped>
+/* Optional: Simple fade transition for route changes */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Ensure RouterLink doesn't override button styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
