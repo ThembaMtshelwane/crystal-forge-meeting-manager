@@ -75,7 +75,11 @@
       "location": "Main Office - 4th Floor, West Wing",
       "organisationId": "ORG-A001",
       "capacity": "4",
-      "bookings": ["b901", "b902", "b905"]
+      "bookings": [
+        "b901",
+        "b902",
+        "b905"
+      ]
     },
     {
       "id": "r1002",
@@ -84,7 +88,9 @@
       "location": "Main Office - 4th Floor, Quiet Zone",
       "organisationId": "ORG-A001",
       "capacity": "8",
-      "bookings": ["b903"]
+      "bookings": [
+        "b903"
+      ]
     },
     {
       "id": "r1003",
@@ -93,7 +99,12 @@
       "location": "Main Office - Ground Floor",
       "organisationId": "ORG-A001",
       "capacity": "12",
-      "bookings": ["b904", "b906", "b907", "b908"]
+      "bookings": [
+        "b904",
+        "b906",
+        "b907",
+        "b908"
+      ]
     },
     {
       "id": "r2001",
@@ -107,16 +118,6 @@
   ],
   "organizations": [],
   "meetings": [
-    {
-      "id": "m-b391d4e0-f2a8-4c17-9195-a83a4c41d1a9",
-      "title": "Quarterly Marketing Strategy Review",
-      "description": "Review Q4 marketing performance and plan for Q1 budget and campaigns.",
-      "userId": "fff0060d-a7fd-4499-b388-5ffc203f0500",
-      "startTime": "2025-11-25T10:00:00Z",
-      "endTime": "2025-11-25T11:30:00Z",
-      "status": true,
-      "roomId": "r-7d2a5e8c-1f6b-4e09-88c2-3a7f1d4b6c9e"
-    },
     {
       "id": "m-6a0e2c1b-7f3d-4a92-8805-5c4b3a2d1e0f",
       "title": "Product Feature Brainstorm: V2",

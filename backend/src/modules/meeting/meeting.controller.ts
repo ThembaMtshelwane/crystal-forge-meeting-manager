@@ -4,6 +4,7 @@ import { IMeeting } from "../../types/meeting.types";
 import { db, saveDB } from "../../utils/fileDb";
 import { HttpStatus } from "../../constants/http.codes";
 import { randomUUID } from "crypto";
+import { IUser } from "../../types/user.types";
 
 // Create/book a meeting
 export const createMeeting = expressAsyncHandler(
@@ -99,12 +100,66 @@ export const getUserMeetings = expressAsyncHandler(
       .json({ data, messgae: "Fetched all user's meetings" });
   }
 );
+
+// Get logged in user's meeting
 export const getLoggedINUserMeetings = expressAsyncHandler(
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    const data = (db.meetings as IMeeting[]).filter(
+      (m) => m.userId === req.user?.id
+    );
+
+    if (data.length !== 0 && !data) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        message: "No user meetings found",
+      });
+      return;
+    }
+    res
+      .status(HttpStatus.OK)
+      .json({ data, messgae: "Fetched all user's meetings" });
+  }
 );
 export const updateMeeting = expressAsyncHandler(
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updates = req.body;
+
+    const meetingIndex = db.meetings.findIndex((m: IMeeting) => m.id === id);
+
+    if (meetingIndex === -1) {
+      res.status(HttpStatus.NOT_FOUND).json({ message: "meeting not found" });
+      return;
+    }
+
+    // Filter out undefined fields
+    const sanitizedUpdates = Object.fromEntries(
+      Object.entries(updates).filter(([_, value]) => value !== undefined)
+    );
+
+    // Merge safely into existing meeting
+    db.meetings[meetingIndex] = {
+      ...db.meetings[meetingIndex],
+      ...sanitizedUpdates,
+    };
+
+    saveDB(db);
+
+    res.status(HttpStatus.OK).json(db.meetings[meetingIndex]);
+  }
 );
-export const deleteMeeting = expressAsyncHandler(
-  async (req: Request, res: Response) => {}
-);
+
+// Delete a meeting
+export const deleteMeeting = (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const index = db.meetings.findIndex((m: IMeeting) => m.id === id);
+  if (index === -1)
+    return res
+      .status(HttpStatus.NOT_FOUND)
+      .json({ message: "meeting not found" });
+
+  db.meetings.splice(index, 1);
+  saveDB(db);
+
+  res.json({ message: "meeting deleted" });
+};
