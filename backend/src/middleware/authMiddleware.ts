@@ -50,3 +50,13 @@ export const protect = expressAsyncHandler(
     }
   }
 );
+
+export const authorizeRoles = (...roles: Role[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (req.user && roles.includes(req.user.role)) {
+      next();
+    } else {
+      throw Error("Not authorized");
+    }
+  };
+};

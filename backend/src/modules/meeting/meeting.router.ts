@@ -8,15 +8,24 @@ import {
   getUserMeetings,
   updateMeeting,
 } from "./meeting.controller";
+import { authorizeRoles } from "../../middleware/authMiddleware";
 
 const router = Router();
 
-router.post("/", createMeeting);
-router.get("/", getMeetings);
+router.post("/", authorizeRoles("admin", "member"), createMeeting);
+router.get("/", authorizeRoles("admin", "member"), getMeetings);
 
-router.get("/profile", getLoggedINUserMeetings);
-router.get("/user/:id", getUserMeetings);
+router.get(
+  "/profile",
+  authorizeRoles("admin", "member"),
+  getLoggedINUserMeetings
+);
+router.get("/user/:id", authorizeRoles("admin"), getUserMeetings);
 
-router.route("/:id").get(getMeeting).patch(updateMeeting).delete(deleteMeeting);
+router
+  .route("/:id")
+  .get(authorizeRoles("admin", "member"), getMeeting)
+  .patch(authorizeRoles("admin", "member"), updateMeeting)
+  .delete(authorizeRoles("admin"), deleteMeeting);
 
 export default router;

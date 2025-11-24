@@ -9,7 +9,7 @@ import generateToken from "../../utils/generateTokens";
 
 export const register = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { firstName, lastName, email, password, username } = req.body;
+    const { firstName, lastName, email, password, username, role } = req.body;
 
     // Check if user exists
     const users = (db.users as IUser[]).filter(
@@ -33,7 +33,7 @@ export const register = expressAsyncHandler(
       email,
       username,
       password: hashedPassword,
-      role: "member",
+      role,
       status: true,
       organizationId: "org1",
     };

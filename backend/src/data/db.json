@@ -1,17 +1,6 @@
 {
   "users": [
     {
-      "id": "u1001",
-      "firstName": "Alice",
-      "lastName": "Mokoena",
-      "email": "alice.mokoena@example.com",
-      "password": "password123",
-      "username": "alice.m",
-      "organizationId": "ORG-A001",
-      "role": "admin",
-      "status": true
-    },
-    {
       "id": "u1002",
       "firstName": "Thabo",
       "lastName": "Nkosi",
@@ -63,6 +52,17 @@
       "username": "themba.m",
       "password": "$2b$10$S.JZvlDANlSPZX07v15YLOQhZXC5HXa.c/v0.MO/K1gtU8L39/X9i",
       "role": "member",
+      "status": true,
+      "organizationId": "org1"
+    },
+    {
+      "id": "a8fdb28f-cbe8-47b6-bc03-b2e17266e6df",
+      "firstName": "Alice",
+      "lastName": "Mokoena",
+      "email": "alice.mokoena@example.com",
+      "username": "alice.m",
+      "password": "$2b$10$1xBSFvJ/aG1g7MPTDB6r/.qtw5PKesbHYyFsb8Ac0WiexYUVsPiKO",
+      "role": "admin",
       "status": true,
       "organizationId": "org1"
     }
