@@ -1,6 +1,4 @@
-src/components/ui/Sidebar.vue
 <script setup lang="ts">
-import { stringify } from "querystring";
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -17,6 +15,7 @@ interface ILinks {
   title: string;
   value: string;
   roles: Role[];
+  path: string;
 }
 const sidebarLinks: ILinks[] = [
   {
@@ -24,24 +23,28 @@ const sidebarLinks: ILinks[] = [
     title: "Dashboard",
     value: "dashboard",
     roles: ["admin", "member"],
+    path: "/dashboard",
   },
   {
     icon: "mdi-calendar",
     title: "Meetings",
     value: "meetings",
     roles: ["admin", "member"],
+    path: "/meetings",
   },
   {
     icon: "mdi-domain",
     title: "Rooms",
     value: "rooms",
     roles: ["admin", "member"],
+    path: "/rooms",
   },
   {
     icon: "mdi-account-group",
     title: "Users",
     value: "users",
     roles: ["admin"],
+    path: "/users",
   },
 ];
 </script>
@@ -72,9 +75,13 @@ const sidebarLinks: ILinks[] = [
     <v-list nav>
       <v-list-item
         v-for="link in sidebarLinks"
+        :key="link.value"
         :prepend-icon="link.icon"
         :title="link.title"
         :value="link.value"
+        :to="link.path"
+        exact
+        :active-class="link.path === '/' ? 'v-list-item--active' : undefined"
       ></v-list-item>
     </v-list>
   </v-navigation-drawer>

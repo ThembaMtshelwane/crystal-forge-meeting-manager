@@ -18,55 +18,54 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/layout/DashboardLayout.vue"),
     children: [
       {
-        path: "/",
+        path: "",
         name: "Dashboard",
         component: () => import("@/views/DashboardView.vue"),
         meta: {
           title: "Dashboard",
         },
       },
+      {
+        path: "/meetings",
+        name: "Meetings",
+        component: () => import("@/views/MeetingsView.vue"),
+        meta: {
+          title: "Meetings View",
+        },
+      },
+      {
+        path: "/meetings/:id",
+        name: "Meeting",
+        component: () => import("@/views/MeetingView.vue"),
+        meta: {
+          title: "Meeting Details",
+        },
+      },
+      {
+        path: "/rooms",
+        name: "Rooms",
+        component: () => import("@/views/RoomsView.vue"),
+        meta: {
+          title: "Rooms View",
+        },
+      },
+      {
+        path: "/rooms/:id",
+        name: "Room",
+        component: () => import("@/views/RoomView.vue"),
+        meta: {
+          title: "Room Details",
+        },
+      },
+      {
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: () => import("@/views/NotFoundView.vue"),
+        meta: {
+          title: "Page Not Found!",
+        },
+      },
     ],
-  },
-
-  {
-    path: "/meetings",
-    name: "Meetings",
-    component: () => import("@/views/MeetingsView.vue"),
-    meta: {
-      title: "Meetings View",
-    },
-  },
-  {
-    path: "/meetings/:id",
-    name: "Meeting",
-    component: () => import("@/views/MeetingView.vue"),
-    meta: {
-      title: "Meeting Details",
-    },
-  },
-  {
-    path: "/rooms",
-    name: "Rooms",
-    component: () => import("@/views/RoomsView.vue"),
-    meta: {
-      title: "Rooms View",
-    },
-  },
-  {
-    path: "/rooms/:id",
-    name: "Room",
-    component: () => import("@/views/RoomView.vue"),
-    meta: {
-      title: "Room Details",
-    },
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "NotFound",
-    component: () => import("@/views/NotFoundView.vue"),
-    meta: {
-      title: "Page Not Found!",
-    },
   },
 ];
 

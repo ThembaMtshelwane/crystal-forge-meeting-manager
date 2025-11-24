@@ -1,4 +1,3 @@
-/src/layout/DashboardLayout.vue
 <script setup lang="ts">
 import Sidebar from "@/components/ui/Sidebar.vue";
 import { computed, ref, watch } from "vue"; // <-- Import 'watch'
