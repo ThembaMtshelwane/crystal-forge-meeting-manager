@@ -10,7 +10,7 @@ import { authorizeRoles } from "../../middleware/authMiddleware";
 
 const router = Router();
 
-router.get("/", authorizeRoles("admin"), getUsers);
+router.get("/", getUsers);
 router.get("/profile", authorizeRoles("admin", "member"), getUserProfile);
 router.patch("/deactivate", authorizeRoles("admin"), toogleUserstatus);
 router

@@ -7,7 +7,7 @@ import { IUser } from "../../types/user.types";
 //Get all users
 export const getUsers = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const data = db.users;
+    const data = db.users as IUser[];
     if (!data) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         message: "No users found",

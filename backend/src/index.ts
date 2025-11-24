@@ -37,7 +37,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/rooms", protect, roomRouter);
-app.use("/api/users", protect, userRouter);
+app.use("/api/users", userRouter);
 app.use("/api/meetings", protect, meetingRouter);
 
 app.listen(PORT, () => {
