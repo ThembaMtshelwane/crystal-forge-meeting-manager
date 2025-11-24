@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
-import LoginForm from "@/components/forms/LoginForm.vue"
+import LoginForm from "@/components/forms/LoginForm.vue";
+import SignUpForm from "@/components/forms/SignUpForm.vue";
 
 const display = useDisplay();
 </script>
@@ -18,7 +19,8 @@ const display = useDisplay();
     </v-app-bar>
 
     <v-main>
-      <LoginForm/>
+      <LoginForm />
+      <SignUpForm />
     </v-main>
   </v-app>
 </template>
