@@ -58,6 +58,14 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/users",
+        name: "users",
+        component: () => import("@/views/UsersView.vue"),
+        meta: {
+          title: "Users",
+        },
+      },
+      {
         path: "/:catchAll(.*)",
         name: "NotFound",
         component: () => import("@/views/NotFoundView.vue"),
