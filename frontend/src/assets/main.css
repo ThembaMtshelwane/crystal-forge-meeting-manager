@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* 1. Define the layer order */
+@layer theme, base, vuetify, components, utilities;
+
+/* 2. Import Vuetify styles into a specific layer */
+@import "vuetify/styles" layer(vuetify);
+
+/* 3. Import Tailwind */
+@import "tailwindcss";
