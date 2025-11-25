@@ -27,14 +27,7 @@ const goToDetails = () => {
 
 <template>
   <v-card :title="props.name" elevation="3" class="d-flex flex-column">
-    <v-card-subtitle class="mb-2"
-      >Dashboard Meetings Rooms Crystal Forge Meets Rooms Page Boardroom Alpha
-      Main Office - 4th Floor, West Wing Capacity: 4 Main presentation room with
-      video conferencing equipment and large monitor. Focus Pod 3 Main Office -
-      4th Floor, Quiet Zone Capacity: 8 Small, soundproof booth designed for
-      single-person focused work or video calls. The Commons Main Office -
-      Ground Floor Capacity: 12
-
+    <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>
         <span class="text-medium-emphasis">{{ props.location }}</span>
