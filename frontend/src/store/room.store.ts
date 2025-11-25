@@ -1,11 +1,11 @@
-import { IRoom } from "@/types/room.types.js";
+import { IRoomResponse } from "@/types/room.types.js";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useRoomStore = defineStore("room", () => {
-  const rooms = ref<IRoom[] | []>([]);
-  const room = ref<IRoom | null>(null);
+  const rooms = ref<IRoomResponse[] | []>([]);
+  const room = ref<IRoomResponse | null>(null);
 
   const loading = ref(false);
   const error = ref<string | null>(null);
@@ -17,7 +17,7 @@ export const useRoomStore = defineStore("room", () => {
 
     try {
       const response = await axios.get<{
-        data: IRoom[];
+        data: IRoomResponse[];
         message: string;
       }>(`api/rooms`);
 
@@ -36,9 +36,10 @@ export const useRoomStore = defineStore("room", () => {
     error.value = null;
 
     try {
-      const response = await axios.get<{ data: IRoom; message: string }>(
-        `api/rooms/${id}`
-      );
+      const response = await axios.get<{
+        data: IRoomResponse;
+        message: string;
+      }>(`api/rooms/${id}`);
       room.value = response.data.data;
     } catch (err: any) {
       error.value = `Failed to fetch user with ID ${id}.`;

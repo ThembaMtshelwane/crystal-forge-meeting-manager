@@ -1,24 +1,22 @@
 <script setup lang="ts">
+import RoomCard from "@/components/cards/RoomCard.vue";
+import ItemsGrid from "@/components/ui/ItemsGrid.vue";
 import { useRoomStore } from "@/store/room.store";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 
 const roomStore = useRoomStore();
-const { room, rooms } = storeToRefs(roomStore);
-
-console.log("rooms  ", rooms.value);
-
+const { rooms } = storeToRefs(roomStore);
 onMounted(async () => {
   await roomStore.getRooms();
-  await roomStore.getRoom("r2001");
 });
 </script>
 
 <template>
-  <ul>
-    <li v-for="room in rooms">{{ room.name }}</li>
-  </ul>
-
-  <div>{{ room?.id }}</div>
   <h1>Rooms Page</h1>
+  <ItemsGrid :items="rooms">
+    <template #item="{ itemData }">
+      <RoomCard v-bind="itemData" />
+    </template>
+  </ItemsGrid>
 </template>

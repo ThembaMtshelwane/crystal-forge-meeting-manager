@@ -6,10 +6,7 @@ import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 
 const meetingStore = useMeetingStore();
-const { meetings, meeting } = storeToRefs(meetingStore);
-
-console.log("meetings, ", meetings.value);
-
+const { meetings } = storeToRefs(meetingStore);
 onMounted(async () => {
   await meetingStore.getMeetings();
 });

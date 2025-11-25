@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { IMeetingResponse } from "@/types/meeting.types";
+import { IRoomResponse } from "@/types/room.types";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
-const props = defineProps<IMeetingResponse>();
+const props = defineProps<IRoomResponse>();
 const display = useDisplay();
 const router = useRouter();
 const MAX_DESCRIPTION = computed(() => {
@@ -19,36 +19,33 @@ const MAX_DESCRIPTION = computed(() => {
 const goToDetails = () => {
   // Navigate using the route name and passing the meeting ID as a parameter
   router.push({
-    name: "Meeting",
+    name: "Room",
     params: { id: props.id },
   });
 };
 </script>
 
 <template>
-  <v-card
-    :title="props.title"
-    :subtitle="props.userId"
-    elevation="3"
-    class="d-flex flex-column h-[275px]"
-  >
-    <v-card-subtitle class="mb-2">
+  <v-card :title="props.name" elevation="3" class="d-flex flex-column">
+    <v-card-subtitle class="mb-2"
+      >Dashboard Meetings Rooms Crystal Forge Meets Rooms Page Boardroom Alpha
+      Main Office - 4th Floor, West Wing Capacity: 4 Main presentation room with
+      video conferencing equipment and large monitor. Focus Pod 3 Main Office -
+      4th Floor, Quiet Zone Capacity: 8 Small, soundproof booth designed for
+      single-person focused work or video calls. The Commons Main Office -
+      Ground Floor Capacity: 12
+
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>
         <span class="text-medium-emphasis">{{ props.location }}</span>
       </div>
-
-      <div class="d-flex justify-between mt-2 max-w-[300px]">
-        <div class="d-flex align-center">
-          <v-icon start icon="mdi-calendar" size="small"></v-icon>
-          <span class="font-weight-medium">{{ props.date }}</span>
-        </div>
-        <div class="d-flex align-center justify-center">
-          <v-icon start icon="mdi-clock-outline" size="small"></v-icon>
-          <span class="font-weight-bold">{{ props.startTime }}</span>
-          <span class="mx-1">-</span>
-          <span class="font-weight-bold">{{ props.endTime }}</span>
-        </div>
+    </v-card-subtitle>
+    <v-card-subtitle class="mb-2">
+      <div class="d-flex align-center text-truncate">
+        <v-icon start icon="mdi-account-group" size="small"></v-icon>
+        <span class="text-medium-emphasis">
+          Capacity: {{ props.capacity }}</span
+        >
       </div>
     </v-card-subtitle>
 

@@ -2,8 +2,6 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{ items: T[] }>();
-
-console.log("data  ", props.items);
 </script>
 
 <template>
