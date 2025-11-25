@@ -8,6 +8,11 @@ import Modal from "@/components/ui/Modal.vue";
 const display = useDisplay();
 const loginModalOpen = ref(false);
 const signupModalOpen = ref(false);
+
+const handleSuccessfulRegistration = () => {
+  signupModalOpen.value = false;
+  console.log("Registration complete! Modal closed.");
+};
 </script>
 
 <template>
@@ -18,16 +23,16 @@ const signupModalOpen = ref(false);
           {{ display.smAndUp.value ? " Crystal Forge Meets" : "CTM" }}
         </v-toolbar-title>
         <v-btn @click="loginModalOpen = true"> Login </v-btn>
-        <v-btn @click="signupModalOpen =true"> SignUp </v-btn>
+        <v-btn @click="signupModalOpen = true"> SignUp </v-btn>
       </div>
     </v-app-bar>
 
-    <Modal v-model="loginModalOpen"  max-width="448">
+    <Modal v-model="loginModalOpen" max-width="448">
       <LoginForm />
     </Modal>
 
     <Modal v-model="signupModalOpen" max-width="600">
-      <SignUpForm />
+      <SignUpForm @success="handleSuccessfulRegistration" />
     </Modal>
   </v-app>
 </template>

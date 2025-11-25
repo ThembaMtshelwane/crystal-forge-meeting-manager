@@ -11,3 +11,12 @@ export interface IUser {
   role: Role;
   status: boolean;
 }
+
+export interface IRegisterUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  username: string;
+  organizationId: string;
+}
