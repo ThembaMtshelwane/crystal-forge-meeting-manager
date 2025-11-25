@@ -6,11 +6,11 @@ import { HttpStatus } from "../../constants/http.codes";
 import { randomUUID } from "crypto";
 import bcrypt from "bcryptjs";
 import generateToken from "../../utils/generateTokens";
+import { clearAuthCookies } from "../../utils/auth.cookie";
 
 export const register = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { firstName, lastName, email, password, username } =
-      req.body;
+    const { firstName, lastName, email, password, username } = req.body;
 
     // Check if user exists
     const users = (db.users as IUser[]).filter(
@@ -87,6 +87,15 @@ export const login = expressAsyncHandler(
     res.status(HttpStatus.OK).json({
       message: "Logged in successfully",
       data: responseData,
+    });
+  }
+);
+
+export const logout = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    clearAuthCookies(res);
+    res.status(HttpStatus.OK).json({
+      message: "User logged out successfully",
     });
   }
 );

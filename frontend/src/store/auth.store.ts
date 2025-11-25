@@ -90,10 +90,24 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
-  function logout() {
-    user.value = null;
-    removeUserFromStorage();
-    console.log("User logged out.");
+  async function logout() {
+    try {
+      const response = await axios.post<{
+        message: string;
+      }>(`${AUTH_URL}/logout`);
+
+      console.log("Logout successful!", response.data.message);
+
+      user.value = null;
+      removeUserFromStorage();
+      console.log("User logged out.");
+    } catch (err) {
+      const errorMessage = "Logout Failed.";
+      console.log(errorMessage);
+      error.value = errorMessage;
+      user.value = null;
+      throw new Error(errorMessage);
+    }
   }
 
   return {
