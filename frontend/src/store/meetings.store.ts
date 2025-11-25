@@ -1,11 +1,11 @@
-import { IMeeting } from "@/types/meeting.types.js";
+import { IMeetingResponse } from "@/types/meeting.types.js";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useMeetingStore = defineStore("meeting", () => {
-  const meetings = ref<IMeeting[] | []>([]);
-  const meeting = ref<IMeeting | null>(null);
+  const meetings = ref<IMeetingResponse[] | []>([]);
+  const meeting = ref<IMeetingResponse | null>(null);
 
   const loading = ref(false);
   const error = ref<string | null>(null);
@@ -19,7 +19,7 @@ export const useMeetingStore = defineStore("meeting", () => {
 
     try {
       const response = await axios.get<{
-        data: IMeeting[];
+        data: IMeetingResponse[];
         message: string;
       }>(`${MEETING_URL}/`);
 
@@ -38,9 +38,10 @@ export const useMeetingStore = defineStore("meeting", () => {
     error.value = null;
 
     try {
-      const response = await axios.get<{ data: IMeeting; message: string }>(
-        `${MEETING_URL}/${id}`
-      );
+      const response = await axios.get<{
+        data: IMeetingResponse;
+        message: string;
+      }>(`${MEETING_URL}/${id}`);
       meeting.value = response.data.data;
     } catch (err: any) {
       error.value = `Failed to fetch user with ID ${id}.`;

@@ -1,10 +1,15 @@
-export interface IMeeting {
-  id: string;
+export interface IMeetingCreate {
   title: string;
   description: string;
-  userId: string;
   startTime: string;
   endTime: string;
-  status: boolean;
+  date: string;
+  location: string;
   roomId: string;
+}
+
+export interface IMeetingResponse extends IMeetingCreate {
+  id: string;
+  userId: string;
+  status: boolean;
 }
