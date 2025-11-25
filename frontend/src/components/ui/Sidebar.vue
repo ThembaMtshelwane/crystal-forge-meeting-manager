@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { sidebarLinks } from "@/constants/sidebar.links";
+import { useAuthStore } from "@/store/auth.store";
+import { Role } from "@/types/user.types";
 import { computed } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -9,44 +12,17 @@ const isPermanent = computed(() => {
   return display.mdAndUp.value;
 });
 
-type Role = "admin" | "member";
-interface ILinks {
-  icon: string;
-  title: string;
-  value: string;
-  roles: Role[];
-  path: string;
-}
-const sidebarLinks: ILinks[] = [
-  {
-    icon: "mdi-view-dashboard",
-    title: "Dashboard",
-    value: "dashboard",
-    roles: ["admin", "member"],
-    path: "/dashboard",
-  },
-  {
-    icon: "mdi-calendar",
-    title: "Meetings",
-    value: "meetings",
-    roles: ["admin", "member"],
-    path: "/meetings",
-  },
-  {
-    icon: "mdi-domain",
-    title: "Rooms",
-    value: "rooms",
-    roles: ["admin", "member"],
-    path: "/rooms",
-  },
-  {
-    icon: "mdi-account-group",
-    title: "Users",
-    value: "users",
-    roles: ["admin"],
-    path: "/users",
-  },
-];
+const authStore = useAuthStore();
+
+const user = computed(() => authStore.currentUser);
+
+const fullName = computed(() =>
+  user.value ? `${user.value.firstName} ${user.value.lastName}` : "Guest"
+);
+
+const availableLinks = sidebarLinks.filter((sl) =>
+  sl.roles.includes(user.value?.role as Role | "member")
+);
 </script>
 
 <template>
@@ -63,9 +39,10 @@ const sidebarLinks: ILinks[] = [
   >
     <v-list>
       <v-list-item
+        class="capitalize!"
         prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-        title="Themba Mtshelwane"
-        subtitle="thembamm3"
+        :title="fullName"
+        :subtitle="user?.username"
       >
       </v-list-item>
     </v-list>
@@ -74,7 +51,7 @@ const sidebarLinks: ILinks[] = [
 
     <v-list nav>
       <v-list-item
-        v-for="link in sidebarLinks"
+        v-for="link in availableLinks"
         :key="link.value"
         :prepend-icon="link.icon"
         :title="link.title"
