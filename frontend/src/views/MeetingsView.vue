@@ -10,6 +10,7 @@ console.log("meetings, ", meetings.value);
 
 onMounted(async () => {
   await meetingStore.getMeetings();
+  await meetingStore.getMeeting("m-6a0e2c1b-7f3d-4a92-8805-5c4b3a2d1e0f");
 });
 </script>
 
@@ -17,7 +18,6 @@ onMounted(async () => {
   <h1>Meetings - See Meetings based on the logged in user role</h1>
   <ul>
     <li v-for="meeting in meetings">{{ meeting.title }}</li>
+    <div>{{ meeting?.id }}</div>
   </ul>
-
-  <div>{{ meeting?.id }}</div>
 </template>

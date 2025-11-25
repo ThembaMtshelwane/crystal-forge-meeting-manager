@@ -32,6 +32,24 @@ export const useMeetingStore = defineStore("meeting", () => {
     }
   }
 
+  async function getMeeting(id: string) {
+    meeting.value = null;
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await axios.get<{ data: IMeeting; message: string }>(
+        `${MEETING_URL}/${id}`
+      );
+      meeting.value = response.data.data;
+    } catch (err: any) {
+      error.value = `Failed to fetch user with ID ${id}.`;
+      console.error("API Error:", err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
   return {
     meeting,
     meetings,
@@ -39,5 +57,6 @@ export const useMeetingStore = defineStore("meeting", () => {
     error,
 
     getMeetings,
+    getMeeting,
   };
 });
