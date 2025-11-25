@@ -102,7 +102,6 @@ router.beforeEach((to, from, next) => {
   const userRole = authStore.currentUser?.role;
 
   // 1. Authentication Check (Protect Dashboard routes)
-  console.log("isAuth  xxxxxxxxxxx", isAuthenticated);
   
   if (to.meta.requiresAuth && !isAuthenticated) {
     // Redirect unauthorized users to the Home page for login

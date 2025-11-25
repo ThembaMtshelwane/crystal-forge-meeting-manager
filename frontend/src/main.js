@@ -13,6 +13,8 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { useAuthStore } from "./store/auth.store.ts";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 // Pinia
 import { createPinia } from "pinia";
@@ -35,5 +37,11 @@ app.use(vuetify);
 
 authStore.loadUserFromStorage();
 app.use(router);
+app.use(Toast, {
+  position: "top-right",
+  timeout: 3000,
+  closeOnClick: true,
+  pauseOnHover: true,
+});
 
 app.mount("#app");
