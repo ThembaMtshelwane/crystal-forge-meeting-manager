@@ -63,7 +63,6 @@ const handleSignUp = async () => {
 </script>
 
 <template>
-  <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="600" rounded="lg">
     <div class="text-h6 text-center text-blue-darken-2 mb-4">
       Create Your Account
     </div>
@@ -187,5 +186,5 @@ const handleSignUp = async () => {
         Go to Log In <v-icon icon="mdi-chevron-right"></v-icon>
       </a>
     </v-card-text>
-  </v-card>
+
 </template>

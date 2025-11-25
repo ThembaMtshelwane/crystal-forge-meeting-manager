@@ -2,8 +2,12 @@
 import { useDisplay } from "vuetify";
 import LoginForm from "@/components/forms/LoginForm.vue";
 import SignUpForm from "@/components/forms/SignUpForm.vue";
+import { ref } from "vue";
+import Modal from "@/components/ui/Modal.vue";
 
 const display = useDisplay();
+const loginModalOpen = ref(false);
+const signupModalOpen = ref(false);
 </script>
 
 <template>
@@ -13,14 +17,17 @@ const display = useDisplay();
         <v-toolbar-title class="font-bold!">
           {{ display.smAndUp.value ? " Crystal Forge Meets" : "CTM" }}
         </v-toolbar-title>
-        <v-btn> Login </v-btn>
-        <v-btn> SignUp </v-btn>
+        <v-btn @click="loginModalOpen = true"> Login </v-btn>
+        <v-btn @click="signupModalOpen =true"> SignUp </v-btn>
       </div>
     </v-app-bar>
 
-    <v-main>
+    <Modal v-model="loginModalOpen"  max-width="448">
       <LoginForm />
+    </Modal>
+
+    <Modal v-model="signupModalOpen" max-width="600">
       <SignUpForm />
-    </v-main>
+    </Modal>
   </v-app>
 </template>
