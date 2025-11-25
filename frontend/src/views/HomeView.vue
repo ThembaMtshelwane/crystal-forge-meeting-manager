@@ -13,6 +13,10 @@ const handleSuccessfulRegistration = () => {
   signupModalOpen.value = false;
   console.log("Registration complete! Modal closed.");
 };
+const handleSuccessfulLogin = () => {
+  signupModalOpen.value = false;
+  console.log("Login complete! Modal closed.");
+};
 </script>
 
 <template>
@@ -28,7 +32,7 @@ const handleSuccessfulRegistration = () => {
     </v-app-bar>
 
     <Modal v-model="loginModalOpen" max-width="448">
-      <LoginForm />
+      <LoginForm @success="handleSuccessfulLogin" />
     </Modal>
 
     <Modal v-model="signupModalOpen" max-width="600">

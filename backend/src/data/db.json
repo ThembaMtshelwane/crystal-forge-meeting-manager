@@ -1,56 +1,12 @@
 {
   "users": [
     {
-      "id": "u1002",
-      "firstName": "Thabo",
-      "lastName": "Nkosi",
-      "email": "thabo.nkosi@example.com",
-      "password": "password123",
-      "username": "thabo.n",
-      "organizationId": "ORG-A001",
-      "role": "member",
-      "status": true
-    },
-    {
-      "id": "u1003",
-      "firstName": "Lindiwe",
-      "lastName": "Dlamini",
-      "email": "lindiwe.dlamini@example.com",
-      "password": "password123",
-      "username": "lindiwe.d",
-      "organizationId": "ORG-A002",
-      "role": "member",
-      "status": false
-    },
-    {
-      "id": "u1004",
-      "firstName": "Sipho",
-      "lastName": "Zuma",
-      "email": "sipho.zuma@example.com",
-      "password": "password123",
-      "username": "sipho.z",
-      "organizationId": "ORG-A002",
-      "role": "member",
-      "status": true
-    },
-    {
-      "id": "u1005",
-      "firstName": "Nomsa",
-      "lastName": "Khumalo",
-      "email": "nomsa.khumalo@example.com",
-      "password": "password123",
-      "username": "nomsa.k",
-      "organizationId": "ORG-A003",
-      "role": "member",
-      "status": true
-    },
-    {
-      "id": "571fd7fd-d3a3-4416-aa7e-478fed42925c",
-      "firstName": "Themab",
-      "lastName": "Mtshelwane",
-      "email": "Thembamm3@gmail.com",
+      "id": "44d8baa1-2065-4d67-a74f-8db503f4a312",
+      "firstName": "themba",
+      "lastName": "mtshelwane",
+      "email": "thembamm3@gmail.com",
       "username": "themba",
-      "password": "$2b$10$FFvUepanZv/I9kzBYev5o..JbE7vgDHxktYiw9SKLBmsUzPX0HLDe",
+      "password": "$2b$10$dYdHRoiWh5ANSVwFAi7lyOtZRhdioj7EgdxNDQ6..nTtxYCAOW2Eu",
       "role": "member",
       "status": true,
       "organizationId": "org1"

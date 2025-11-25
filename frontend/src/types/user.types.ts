@@ -20,3 +20,8 @@ export interface IRegisterUser {
   username: string;
   organizationId: string;
 }
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+}

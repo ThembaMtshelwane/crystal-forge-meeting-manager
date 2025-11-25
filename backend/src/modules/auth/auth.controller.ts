@@ -65,6 +65,11 @@ export const login = expressAsyncHandler(
 
     const userIndex = users.findIndex((u) => u.email === email);
     const user = users[userIndex];
+
+    if (!user) {
+      res.status(HttpStatus.NOT_FOUND).json({ message: "User not found" });
+      return;
+    }
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!user || !validPassword) {

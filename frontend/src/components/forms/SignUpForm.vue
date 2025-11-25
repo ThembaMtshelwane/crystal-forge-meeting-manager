@@ -7,7 +7,7 @@ import type { VForm } from "vuetify/components";
 
 // --- Sign up logic ---
 const authStore = useAuthStore();
-const emit = defineEmits(["success", "close"]); // Added emit for parent communication
+const emit = defineEmits(["success", "close"]);
 const isLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 
@@ -48,7 +48,14 @@ const handleSignUp = async () => {
   if (valid) {
     // Add actual sign-up/API call logic here
     isLoading.value = true;
-    const payload = { ...formData };
+    const payload = {
+      firstName: formData.firstName.trim().toLowerCase(),
+      lastName: formData.lastName.trim().toLowerCase(),
+      email: formData.email.trim().toLowerCase(),
+      username: formData.username.trim().toLowerCase(),
+      organizationId: formData.organizationId.trim().toLowerCase(),
+      password: formData.password,
+    };
 
     try {
       const res = await authStore.register(payload);
