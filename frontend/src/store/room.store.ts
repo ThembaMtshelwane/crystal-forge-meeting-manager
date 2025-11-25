@@ -75,6 +75,8 @@ export const useRoomStore = defineStore("room", () => {
   return {
     rooms,
     room,
+    error,
+    loading,
 
     getRooms,
     getRoom,

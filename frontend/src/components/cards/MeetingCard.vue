@@ -3,13 +3,14 @@ import { useRoomStore } from "@/store/room.store";
 import { useUserStore } from "@/store/user.store";
 import { IMeetingResponse } from "@/types/meeting.types";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
+import Modal from "../ui/Modal.vue";
+import MeetingView from "@/views/MeetingView.vue";
 
 const props = defineProps<IMeetingResponse>();
 const display = useDisplay();
-const router = useRouter();
 const MAX_DESCRIPTION = computed(() => {
   if (display.mdAndUp.value) {
     return 110;
@@ -30,13 +31,9 @@ const roomForMeeting = computed(() => {
 const meetingOrganizedBy = computed(() => {
   return users.value.find((u) => u.id === props.userId);
 });
-const goToDetails = () => {
-  // Navigate using the route name and passing the meeting ID as a parameter
-  router.push({
-    name: "Meeting",
-    params: { id: props.id },
-  });
-};
+
+const detailsModalOpen = ref(false);
+const deleteModalOpen = ref(false);
 </script>
 
 <template>
@@ -86,10 +83,28 @@ const goToDetails = () => {
     </v-card-text>
 
     <v-card-actions class="mt-auto">
-      <v-btn color="blue" variant="flat" @click="goToDetails">
+      <v-btn @click="detailsModalOpen = true" color="blue" variant="flat">
         <v-icon start icon="mdi-eye-arrow-right"></v-icon>
         View Details
       </v-btn>
     </v-card-actions>
   </v-card>
+
+  <Modal v-model="detailsModalOpen" max-width="650">
+    <MeetingView
+      :meeting="{
+        id: props.id,
+        title: props.title,
+        description: props.description,
+        date: props.date,
+        location: `${roomForMeeting?.name || 'N/A'} - ${
+          roomForMeeting?.location || 'N/A'
+        }`,
+        organizer: meetingOrganizedBy?.username || 'Unknown',
+        startTime: props.startTime,
+        endTime: props.endTime,
+        status: props.status,
+      }"
+    />
+  </Modal>
 </template>

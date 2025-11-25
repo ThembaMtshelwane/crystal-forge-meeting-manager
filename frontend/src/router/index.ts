@@ -40,16 +40,15 @@ const routes: Array<RouteRecordRaw> = [
           roles: ["admin", "member"],
         },
       },
-      {
-        path: "/meetings/:id",
-        name: "Meeting",
-        component: () => import("@/views/MeetingView.vue"),
-        meta: {
-          title: "Meeting Details",
-          // FIX: Changed 'members' to 'member' for consistency with other roles
-          roles: ["admin", "member"], 
-        },
-      },
+      // {
+      //   path: "/meetings/:id",
+      //   name: "Meeting",
+      //   component: () => import("@/views/MeetingDetailsView.vue"),
+      //   meta: {
+      //     title: "Meeting Details",
+      //     roles: ["admin", "member"],
+      //   },
+      // },
       {
         path: "/rooms",
         name: "Rooms",
@@ -59,15 +58,15 @@ const routes: Array<RouteRecordRaw> = [
           roles: ["admin", "member"],
         },
       },
-      {
-        path: "/rooms/:id",
-        name: "Room",
-        component: () => import("@/views/RoomView.vue"),
-        meta: {
-          title: "Room Details",
-          roles: ["admin", "member"],
-        },
-      },
+      // {
+      //   path: "/rooms/:id",
+      //   name: "Room",
+      //   component: () => import("@/views/RoomView.vue"),
+      //   meta: {
+      //     title: "Room Details",
+      //     roles: ["admin", "member"],
+      //   },
+      // },
       {
         path: "/users",
         name: "users",
@@ -102,7 +101,7 @@ router.beforeEach((to, from, next) => {
   const userRole = authStore.currentUser?.role;
 
   // 1. Authentication Check (Protect Dashboard routes)
-  
+
   if (to.meta.requiresAuth && !isAuthenticated) {
     // Redirect unauthorized users to the Home page for login
     return next({ name: "Home" });
@@ -112,7 +111,9 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresGuest && isAuthenticated) {
     // ✅ FIX: Use the explicit path '/dashboard' instead of the name.
     // This ensures the redirect works reliably regardless of route nesting.
-    console.log(`Authenticated user attempting to access guest route: ${to.path}. Redirecting to Dashboard.`);
+    console.log(
+      `Authenticated user attempting to access guest route: ${to.path}. Redirecting to Dashboard.`
+    );
     return next({ path: "/dashboard" });
   }
 
@@ -121,9 +122,11 @@ router.beforeEach((to, from, next) => {
     const allowedRoles = to.meta.roles as string[];
 
     if (userRole && !allowedRoles.includes(userRole)) {
-      console.warn(`Access denied for role: ${userRole}. Redirecting to Dashboard.`);
+      console.warn(
+        `Access denied for role: ${userRole}. Redirecting to Dashboard.`
+      );
       // Redirect unauthorized roles back to the main dashboard
-      return next({ path: "/dashboard" }); 
+      return next({ path: "/dashboard" });
     }
   }
 
