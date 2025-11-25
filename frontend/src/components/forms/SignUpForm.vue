@@ -18,7 +18,7 @@ const formData = reactive<IRegisterUser>({
   email: "",
   username: "",
   password: "",
-  organizationId: "",
+  organizationId: "cfm-1",
 });
 const form = ref<VForm | null>(null);
 const visible = ref(false);
@@ -171,7 +171,7 @@ const handleSignUp = async () => {
           </div>
           <v-text-field
             v-model="formData.organizationId"
-            :rules="[requiredRule]"
+            disabled
             density="compact"
             placeholder="Enter your organization ID"
             prepend-inner-icon="mdi-domain"

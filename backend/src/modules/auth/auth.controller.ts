@@ -9,7 +9,8 @@ import generateToken from "../../utils/generateTokens";
 
 export const register = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { firstName, lastName, email, password, username } = req.body;
+    const { firstName, lastName, email, password, username } =
+      req.body;
 
     // Check if user exists
     const users = (db.users as IUser[]).filter(
@@ -35,7 +36,7 @@ export const register = expressAsyncHandler(
       password: hashedPassword,
       role: "member",
       status: true,
-      organizationId: "org1",
+      organizationId: "cfm-1",
     };
 
     if (!newUser) {

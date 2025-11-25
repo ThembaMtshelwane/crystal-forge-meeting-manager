@@ -9,7 +9,18 @@
       "password": "$2b$10$dYdHRoiWh5ANSVwFAi7lyOtZRhdioj7EgdxNDQ6..nTtxYCAOW2Eu",
       "role": "member",
       "status": true,
-      "organizationId": "org1"
+      "organizationId": "cfm-1"
+    },
+    {
+      "id": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
+      "firstName": "martin",
+      "lastName": "mtshelwane",
+      "email": "admin@cfm.com",
+      "username": "admin",
+      "password": "$2b$10$cUT20bz8e5zcl44zx46Yo.yFt1vng1SFg.O8bfdbN8tSbDCed63Z2",
+      "role": "admin",
+      "status": true,
+      "organizationId": "cfm-1"
     }
   ],
   "rooms": [
