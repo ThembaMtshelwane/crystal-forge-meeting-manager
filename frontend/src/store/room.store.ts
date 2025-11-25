@@ -1,4 +1,4 @@
-import { IRoomResponse } from "@/types/room.types.js";
+import { IRoomCreate, IRoomResponse } from "@/types/room.types.js";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -9,6 +9,7 @@ export const useRoomStore = defineStore("room", () => {
 
   const loading = ref(false);
   const error = ref<string | null>(null);
+  const ROOM_URL = "api/rooms";
 
   async function getRooms() {
     rooms.value = [];
@@ -49,11 +50,34 @@ export const useRoomStore = defineStore("room", () => {
     }
   }
 
+  async function createRoom(payload: IRoomCreate) {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await axios.post<{
+        data: IRoomResponse;
+        message: string;
+      }>(`${ROOM_URL}/`, payload);
+
+      const newRoom = response.data.data as IRoomResponse;
+
+      (rooms.value as IRoomResponse[]).push(newRoom);
+    } catch (err: any) {
+      error.value = "Failed to create a room.";
+      console.error("API Error:", err);
+      return null;
+    } finally {
+      loading.value = false;
+    }
+  }
+
   return {
     rooms,
     room,
 
     getRooms,
     getRoom,
+    createRoom,
   };
 });

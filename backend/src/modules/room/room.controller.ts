@@ -17,7 +17,7 @@ export const createRoom = (req: Request, res: Response) => {
     res.status(HttpStatus.BAD_REQUEST).json({
       message: "Room already exists",
     });
-    return;
+    throw new Error("Room already exists");
   }
 
   const newRoom: IRoom = {
@@ -37,6 +37,7 @@ export const createRoom = (req: Request, res: Response) => {
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       message: "Error: Failed to created a room",
     });
+    throw new Error("Error: Failed to created a room");
   }
   res
     .status(HttpStatus.CREATED)

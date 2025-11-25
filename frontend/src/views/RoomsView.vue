@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RoomCard from "@/components/cards/RoomCard.vue";
+import RoomForm from "@/components/forms/RoomForm.vue";
 import ItemsGrid from "@/components/ui/ItemsGrid.vue";
 import Modal from "@/components/ui/Modal.vue";
 import { useRoomStore } from "@/store/room.store";
@@ -33,11 +34,13 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <v-row class="mb-6 border">
+    <v-row class="mb-2">
       <v-btn class="mr-auto!" @click="addModalOpen = true">
         Create a room</v-btn
       >
-      <Modal v-model="addModalOpen" max-width="600"> </Modal>
+      <Modal v-model="addModalOpen" max-width="600">
+        <RoomForm @success="closeModal" />
+      </Modal>
     </v-row>
 
     <v-row>

@@ -70,6 +70,24 @@
       "organisationId": "ORG-A002",
       "capacity": "24",
       "bookings": []
+    },
+    {
+      "id": "2bbfd431-c433-4fb3-bde5-8cee9fa77ac1",
+      "name": "qqqqq",
+      "capacity": "12",
+      "description": "qqqqqqqq",
+      "location": "qqqqqqq",
+      "organisationId": "org1",
+      "meetings": []
+    },
+    {
+      "id": "90a69c7b-b837-4a77-b03e-0a65c73f81f1",
+      "name": "sss",
+      "capacity": "3",
+      "description": "dddddd",
+      "location": "ssssss",
+      "organisationId": "org1",
+      "meetings": []
     }
   ],
   "organizations": [],
@@ -120,6 +138,15 @@
       "startTime": "09:00",
       "endTime": "10:00",
       "roomId": "focus pod 3",
+      "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312"
+    },
+    {
+      "id": "284fca78-6fdc-4b56-b040-2976f52b071b",
+      "title": "me",
+      "description": "ee",
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "roomId": "sss",
       "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312"
     }
   ]

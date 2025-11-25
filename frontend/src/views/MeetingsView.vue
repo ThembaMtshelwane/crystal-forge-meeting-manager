@@ -36,7 +36,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <v-row class="mb-6 border">
+    <v-row class="mb-2">
       <v-btn class="mr-auto!" @click="addModalOpen = true">
         Create a meeting</v-btn
       >
