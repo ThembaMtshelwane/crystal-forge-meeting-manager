@@ -5,11 +5,13 @@ import ItemsGrid from "@/components/ui/ItemsGrid.vue";
 import Modal from "@/components/ui/Modal.vue";
 import { useMeetingStore } from "@/store/meetings.store";
 import { useRoomStore } from "@/store/room.store";
+import { useUserStore } from "@/store/user.store";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 
 const meetingStore = useMeetingStore();
 const roomStore = useRoomStore();
+const userStore = useUserStore();
 const { meetings } = storeToRefs(meetingStore);
 const addModalOpen = ref(false);
 const closeModal = () => {
@@ -18,6 +20,7 @@ const closeModal = () => {
 onMounted(async () => {
   await meetingStore.getMeetings();
   await roomStore.getRooms();
+  await userStore.getUsers();
 });
 </script>
 

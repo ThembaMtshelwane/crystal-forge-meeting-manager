@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useRoomStore } from "@/store/room.store";
+import { useUserStore } from "@/store/user.store";
 import { IMeetingResponse } from "@/types/meeting.types";
 import { storeToRefs } from "pinia";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
@@ -20,9 +21,14 @@ const MAX_DESCRIPTION = computed(() => {
 
 const roomStore = useRoomStore();
 const { rooms } = storeToRefs(roomStore);
+const userStore = useUserStore();
+const { users } = storeToRefs(userStore);
 
 const roomForMeeting = computed(() => {
   return rooms.value.find((r) => r.id === props.roomId);
+});
+const meetingOrganizedBy = computed(() => {
+  return users.value.find((u) => u.id === props.userId);
 });
 const goToDetails = () => {
   // Navigate using the route name and passing the meeting ID as a parameter
@@ -36,7 +42,7 @@ const goToDetails = () => {
 <template>
   <v-card
     :title="props.title"
-    :subtitle="props.userId"
+    :subtitle="`Organized by: ${meetingOrganizedBy?.username}`"
     elevation="3"
     class="d-flex flex-column h-[275px]"
   >
