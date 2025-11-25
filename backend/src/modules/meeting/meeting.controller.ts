@@ -9,7 +9,8 @@ import { IUser } from "../../types/user.types";
 // Create/book a meeting
 export const createMeeting = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { title, description, startTime, endTime, status, roomId } = req.body;
+    const { title, description, startTime, endTime, status, roomId, date } =
+      req.body;
 
     //#TODO: Update the checks, make sure there are no double bookings
     const meetings = (db.meetings as IMeeting[]).filter(
@@ -32,11 +33,12 @@ export const createMeeting = expressAsyncHandler(
       id: randomUUID(),
       title,
       description,
+      userId: req.user?.id as string,
       startTime,
       endTime,
+      date,
       status,
       roomId,
-      userId: req.user?.id as string,
     };
     db.meetings.push(newMeeting);
     saveDB(db);

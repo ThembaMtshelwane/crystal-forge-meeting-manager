@@ -5,6 +5,7 @@ export interface IMeeting {
   userId: string;
   startTime: string;
   endTime: string;
+  date: string;
   status: boolean;
   roomId: string;
 }

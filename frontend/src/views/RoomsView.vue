@@ -3,9 +3,10 @@ import RoomCard from "@/components/cards/RoomCard.vue";
 import RoomForm from "@/components/forms/RoomForm.vue";
 import ItemsGrid from "@/components/ui/ItemsGrid.vue";
 import Modal from "@/components/ui/Modal.vue";
+import { useAuthStore } from "@/store/auth.store";
 import { useRoomStore } from "@/store/room.store";
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const roomStore = useRoomStore();
 const { rooms } = storeToRefs(roomStore);
@@ -13,6 +14,10 @@ const addModalOpen = ref(false);
 const closeModal = () => {
   addModalOpen.value = false;
 };
+
+const authStore = useAuthStore();
+const user = computed(() => authStore.currentUser);
+
 onMounted(async () => {
   await roomStore.getRooms();
 });
@@ -34,7 +39,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <v-row class="mb-2">
+    <v-row class="mb-2" v-if="user?.role==='admin'">
       <v-btn class="mr-auto!" @click="addModalOpen = true">
         Create a room</v-btn
       >
@@ -47,7 +52,7 @@ onMounted(async () => {
       <v-col cols="12">
         <ItemsGrid :items="rooms">
           <template #item="{ itemData }">
-            <RoomCard v-bind="itemData" />
+            <RoomCard v-bind="itemData" :key="itemData.id"/>
           </template>
         </ItemsGrid>
       </v-col>

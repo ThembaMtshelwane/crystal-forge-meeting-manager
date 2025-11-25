@@ -4,7 +4,6 @@ export interface IMeetingCreate {
   startTime: string;
   endTime: string;
   date: string;
-  location: string;
   roomId: string;
 }
 

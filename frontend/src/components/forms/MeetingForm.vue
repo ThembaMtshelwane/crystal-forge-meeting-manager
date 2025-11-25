@@ -21,7 +21,6 @@ const formData = reactive<IMeetingCreate>({
   startTime: "09:00",
   endTime: "10:00",
   date: "", // YYYY-MM-DD
-  location: "",
   roomId: "",
 });
 const roomStore = useRoomStore();
@@ -67,7 +66,6 @@ async function submitForm() {
       startTime: formData.startTime.trim().toLowerCase(),
       endTime: formData.endTime.trim().toLowerCase(),
       date: formData.date.trim().toLowerCase(),
-      location: formData.location.trim().toLowerCase(),
       roomId: formData.roomId.trim().toLowerCase(),
     };
     const res = await meeetingStore.createMeeting(payload);

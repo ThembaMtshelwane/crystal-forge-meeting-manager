@@ -28,66 +28,28 @@
       "id": "r1001",
       "name": "Boardroom Alpha",
       "description": "Main presentation room with video conferencing equipment and large monitor.",
-      "location": "Main Office - 4th Floor, West Wing",
+      "location": "4th Floor, West Wing",
       "organisationId": "ORG-A001",
       "capacity": "4",
-      "bookings": [
-        "b901",
-        "b902",
-        "b905"
-      ]
+      "bookings": ["b901", "b902", "b905"]
     },
     {
       "id": "r1002",
       "name": "Focus Pod 3",
       "description": "Small, soundproof booth designed for single-person focused work or video calls.",
-      "location": "Main Office - 4th Floor, Quiet Zone",
+      "location": "4th Floor",
       "organisationId": "ORG-A001",
       "capacity": "8",
-      "bookings": [
-        "b903"
-      ]
+      "bookings": ["b903"]
     },
     {
       "id": "r1003",
       "name": "The Commons",
       "description": "Large, flexible open area for team huddles, informal meetings, and collaboration.",
-      "location": "Main Office - Ground Floor",
+      "location": "Ground Floor",
       "organisationId": "ORG-A001",
       "capacity": "12",
-      "bookings": [
-        "b904",
-        "b906",
-        "b907",
-        "b908"
-      ]
-    },
-    {
-      "id": "r2001",
-      "name": "Training Lab 1",
-      "description": "IT training room equipped with 20 workstations and projector.",
-      "location": "Annex Building - 2nd Floor",
-      "organisationId": "ORG-A002",
-      "capacity": "24",
-      "bookings": []
-    },
-    {
-      "id": "2bbfd431-c433-4fb3-bde5-8cee9fa77ac1",
-      "name": "qqqqq",
-      "capacity": "12",
-      "description": "qqqqqqqq",
-      "location": "qqqqqqq",
-      "organisationId": "org1",
-      "meetings": []
-    },
-    {
-      "id": "90a69c7b-b837-4a77-b03e-0a65c73f81f1",
-      "name": "sss",
-      "capacity": "3",
-      "description": "dddddd",
-      "location": "ssssss",
-      "organisationId": "org1",
-      "meetings": []
+      "bookings": ["b904", "b906", "b907", "b908"]
     }
   ],
   "organizations": [],
@@ -96,58 +58,34 @@
       "id": "m-6a0e2c1b-7f3d-4a92-8805-5c4b3a2d1e0f",
       "title": "Product Feature Brainstorm: V2",
       "description": "Creative session to define core features for the next major release.",
-      "userId": "fff0060d-a7fd-4499-b388-5ffc203f0500",
-      "startTime": "2025-11-25T14:00:00Z",
-      "endTime": "2025-11-25T15:00:00Z",
+      "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312",
+      "startTime": "09:00 AM",
+      "endTime": "10:00 AM",
+      "date": "01-12-2025",
       "status": true,
-      "roomId": "r-9f1e0d3c-4b6a-7890-1234-567890abcdef"
+      "roomId": "r1001"
     },
     {
       "id": "m-1c4b7e9d-3a5f-4d2c-8b10-6f8e7d5c4b3a",
       "title": "Team Sync-up (Daily Standup)",
       "description": "Quick daily meeting to review progress and blockers.",
-      "userId": "u-e4f5g6h7i8j9k0l1m2n3",
-      "startTime": "2025-11-26T09:00:00Z",
-      "endTime": "2025-11-26T09:15:00Z",
+      "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
+      "startTime": "11:00 AM",
+      "endTime": "12:00 PM",
+      "date": "02-12-2025",
       "status": true,
-      "roomId": "r-3b2a1c4d-5e6f-7890-1234-567890abcdef"
+      "roomId": "r1002"
     },
     {
       "id": "b0033ebf-7ac2-4969-add9-4ffc9622dac2",
       "title": "Client Follow-up: Project Alpha xxxxxxxxxxxx",
       "description": "Check-in with Client Alpha regarding deployment timeline and feedback.",
-      "startTime": "2025-11-26T11:00:00Z",
-      "endTime": "2025-11-26T12:00:00Z",
+      "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
+      "startTime": "11:00 AM",
+      "endTime": "12:00 PM",
+      "date": "03-12-2025",
       "status": false,
-      "roomId": "r-7d2a5e8c-1f6b-4e09-88c2-3a7f1d4b6c9e",
-      "userId": "fff0060d-a7fd-4499-b388-5ffc203f0500"
-    },
-    {
-      "id": "fa8654d5-d9da-4de8-83db-1764e68497ee",
-      "title": "aaaaa",
-      "description": "something",
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "roomId": "boardroom alpha",
-      "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312"
-    },
-    {
-      "id": "5fd34c94-8352-43fe-839f-8a671043500a",
-      "title": "ssssss",
-      "description": "ssssss",
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "roomId": "focus pod 3",
-      "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312"
-    },
-    {
-      "id": "284fca78-6fdc-4b56-b040-2976f52b071b",
-      "title": "me",
-      "description": "ee",
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "roomId": "sss",
-      "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312"
+      "roomId": "r1003"
     }
   ]
 }

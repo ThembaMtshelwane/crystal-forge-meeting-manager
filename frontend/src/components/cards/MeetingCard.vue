@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useRoomStore } from "@/store/room.store";
 import { IMeetingResponse } from "@/types/meeting.types";
-import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 
@@ -16,6 +18,12 @@ const MAX_DESCRIPTION = computed(() => {
   return 120;
 });
 
+const roomStore = useRoomStore();
+const { rooms } = storeToRefs(roomStore);
+
+const roomForMeeting = computed(() => {
+  return rooms.value.find((r) => r.id === props.roomId);
+});
 const goToDetails = () => {
   // Navigate using the route name and passing the meeting ID as a parameter
   router.push({
@@ -35,7 +43,9 @@ const goToDetails = () => {
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>
-        <span class="text-medium-emphasis">{{ props.location }}</span>
+        <span class="text-medium-emphasis"
+          >{{ roomForMeeting?.name }} - {{ roomForMeeting?.location }}</span
+        >
       </div>
 
       <div class="d-flex justify-between mt-2 max-w-[300px]">
