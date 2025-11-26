@@ -38,7 +38,7 @@ const detailsModalOpen = ref(false);
 function handleMeetingDeleted(id: string) {
   // Close the modal
   detailsModalOpen.value = false;
-  
+
   // Refresh the meetings list
   meetingStore.getMeetings();
 }
@@ -46,7 +46,7 @@ function handleMeetingDeleted(id: string) {
 function handleMeetingUpdated(id: string) {
   // Close the modal
   detailsModalOpen.value = false;
-  
+
   // Refresh the meetings list to show updated data
   meetingStore.getMeetings();
 }
@@ -57,7 +57,7 @@ function handleMeetingUpdated(id: string) {
     :title="props.title"
     :subtitle="`Organized by: ${meetingOrganizedBy?.username}`"
     elevation="3"
-    class="d-flex flex-column h-[275px]"
+    class="d-flex flex-column pa-4"
   >
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
@@ -67,16 +67,27 @@ function handleMeetingUpdated(id: string) {
         >
       </div>
 
-      <div class="d-flex justify-between mt-2 max-w-[300px]">
+      <div
+        class="d-flex flex-col md:flex-row justify-between mt-2 max-w-[300px]"
+      >
         <div class="d-flex align-center">
-          <v-icon start icon="mdi-calendar" size="small"></v-icon>
+          <v-icon
+            start
+            icon="mdi-calendar"
+            size="small "
+            color="primary"
+          ></v-icon>
           <span class="font-weight-medium">{{ props.date }}</span>
         </div>
-        <div class="d-flex align-center justify-center">
-          <v-icon start icon="mdi-clock-outline" size="small"></v-icon>
-          <span class="font-weight-bold">{{ props.startTime }}</span>
+        <div class="d-flex align-center md:justify-center">
+          <span>
+            <v-icon start icon="mdi-clock-outline" size="small"></v-icon>
+            <span class="font-weight-bold">{{ props.startTime }}</span>
+          </span>
           <span class="mx-1">-</span>
-          <span class="font-weight-bold">{{ props.endTime }}</span>
+          <span>
+            <span class="font-weight-bold">{{ props.endTime }}</span>
+          </span>
         </div>
       </div>
     </v-card-subtitle>
@@ -85,7 +96,7 @@ function handleMeetingUpdated(id: string) {
 
     <v-card-text
       v-if="props.description"
-      class="description-clamp overflow-hidden border h-16"
+      class="description-clamp overflow-hidden h-20"
     >
       {{
         props.description.length > MAX_DESCRIPTION
@@ -99,7 +110,12 @@ function handleMeetingUpdated(id: string) {
     </v-card-text>
 
     <v-card-actions class="mt-auto">
-      <v-btn @click="detailsModalOpen = true" color="blue" variant="flat">
+      <v-btn
+        class="px-4!"
+        @click="detailsModalOpen = true"
+        color="primary"
+        variant="flat"
+      >
         <v-icon start icon="mdi-eye-arrow-right"></v-icon>
         View Details
       </v-btn>

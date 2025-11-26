@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { useRoomStore } from "@/store/room.store";
 import { IRoomResponse } from "@/types/room.types";
-import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
+import Modal from "../ui/Modal.vue";
+import RoomView from "@/views/RoomView.vue";
 
 const props = defineProps<IRoomResponse>();
 const display = useDisplay();
-const router = useRouter();
+const roomStore = useRoomStore();
+
 const MAX_DESCRIPTION = computed(() => {
   if (display.mdAndUp.value) {
     return 110;
@@ -16,29 +19,46 @@ const MAX_DESCRIPTION = computed(() => {
   return 120;
 });
 
-const goToDetails = () => {
-  // Navigate using the route name and passing the meeting ID as a parameter
-  router.push({
-    name: "Room",
-    params: { id: props.id },
-  });
-};
+const detailsModalOpen = ref(false);
+
+function handleRoomDeleted(id: string) {
+  // Close the modal
+  detailsModalOpen.value = false;
+
+  // Refresh the rooms list
+  roomStore.getRooms();
+}
+
+function handleRoomUpdated(id: string) {
+  // Close the modal
+  detailsModalOpen.value = false;
+
+  // Refresh the rooms list to show updated data
+  roomStore.getRooms();
+}
 </script>
 
 <template>
-  <v-card :title="props.name" elevation="3" class="d-flex flex-column">
+  <v-card
+    :title="props.name"
+    elevation="3"
+    class="d-flex flex-column h-[275px] pa-4"
+  >
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>
-        <span class="text-medium-emphasis">{{ props.location }}</span>
+        <span class="text-medium-emphasis capitalize">{{
+          props.location
+        }}</span>
       </div>
     </v-card-subtitle>
+
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-account-group" size="small"></v-icon>
         <span class="text-medium-emphasis">
-          Capacity: {{ props.capacity }}</span
-        >
+          Capacity: {{ props.capacity }}
+        </span>
       </div>
     </v-card-subtitle>
 
@@ -46,7 +66,7 @@ const goToDetails = () => {
 
     <v-card-text
       v-if="props.description"
-      class="description-clamp overflow-hidden border h-16"
+      class="description-clamp overflow-hidden h-16"
     >
       {{
         props.description.length > MAX_DESCRIPTION
@@ -60,10 +80,29 @@ const goToDetails = () => {
     </v-card-text>
 
     <v-card-actions class="mt-auto">
-      <v-btn color="blue" variant="flat" @click="goToDetails">
+      <v-btn
+        class="px-4!"
+        @click="detailsModalOpen = true"
+        color="primary"
+        variant="flat"
+      >
         <v-icon start icon="mdi-eye-arrow-right"></v-icon>
         View Details
       </v-btn>
     </v-card-actions>
   </v-card>
+
+  <Modal v-model="detailsModalOpen" max-width="650">
+    <RoomView
+      :room="{
+        id: props.id,
+        name: props.name,
+        description: props.description,
+        location: props.location,
+        capacity: props.capacity,
+      }"
+      @deleted="handleRoomDeleted"
+      @updated="handleRoomUpdated"
+    />
+  </Modal>
 </template>
