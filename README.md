@@ -30,6 +30,7 @@ application into a **frontend client** and a **backend API**.
 | **UI Framework**     | **Vuetify 3**               | Comprehensive and accessible component library for Material Design. |
 | **Backend**          | **Node.js/Express**         | Handles API requests, business logic, and database interaction.     |
 | **Database**         | **In-memory (db.json)**     | Stores user, meeting, and room data using a JSON file as storage.   |
+
 ---
 
 ## 🏃 Getting Started
@@ -54,7 +55,7 @@ npm install
 npm run dev
 ```
 
-## 🚀 Server listening on **http://localhost:5000**
+🚀 Server listening on **http://localhost:5000**
 
 ### 3️⃣ Frontend Setup (Vue Application)
 
@@ -63,11 +64,10 @@ Open a refresh terminal. Make sure you're in the crystal-forge-meets folder
 ```bash
 cd frontend
 npm install
-# Ensure the frontend is configured to talk to the running backend API
 npm run dev
 ```
 
-Access the application in your browser at:
+🚀 Access the application in your browser at:
 **http://localhost:3000/**.
 
 ---
@@ -120,6 +120,11 @@ Add an Admin interface for managing user accounts, suspensions, and role
 assignments.
 
 ---
+
+## ⏳ Development Journey : 35hrs
+
+This was a new and interesting experience to get to explore Vue and Vuetify. This program took me about 35 hours of coding and studying.
+I am proud of what I have achieved in these 35hrs. This has given me the confidence to know I can tackle any new framework that comes my way.
 
 ## 🙌 Contributions
 
