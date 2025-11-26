@@ -7,25 +7,16 @@ room booking within an organization. It provides a simple, yet
 comprehensive solution for users to create, manage, and track meetings
 while efficiently handling the allocation of available conference rooms.
 
-------------------------------------------------------------------------
+
 
 ## 🔑 Key Features
 
-  -----------------------------------------------------------------------
-  Feature                     Description
-  --------------------------- -------------------------------------------
-  **Meeting Management**      Schedule, organize, edit, and delete
-                              meetings efficiently.
-
-  **Room Booking**            Book and manage meeting rooms with ease,
-                              linking a meeting to a specific resource.
-
-  **Team Collaboration**      Facilitate initial collaboration by having
-                              a central system for meetings.
-
-  **Analytics Dashboard**     *(Future)* Track meeting statistics and
-                              resource usage insights.
-  -----------------------------------------------------------------------
+| Feature                 | Description                                                                 |
+|-------------------------|-----------------------------------------------------------------------------|
+| **Meeting Management**  | Schedule, organize, edit, and delete meetings efficiently.                  |
+| **Room Booking**        | Book and manage meeting rooms with ease, linking a meeting to a resource.   |
+| **Team Collaboration**  | Facilitate collaboration by having a central system for meetings.           |
+| **Analytics Dashboard** | *(Future)* Track meeting statistics and resource usage insights.            |
 
 ---
 
