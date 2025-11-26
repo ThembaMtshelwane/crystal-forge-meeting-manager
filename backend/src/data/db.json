@@ -21,6 +21,17 @@
       "role": "admin",
       "status": true,
       "organizationId": "cfm-1"
+    },
+    {
+      "id": "e57a8009-72cc-437e-bf7c-3129a215ced0",
+      "firstName": "user",
+      "lastName": "three",
+      "email": "user3@domain.com",
+      "username": "user3",
+      "password": "$2b$10$NTmX7uQE6UmhJMOHuCP5E.KdfdHIOJvg8UB9Q5x75f3EL7ZWjq4x2",
+      "role": "member",
+      "status": true,
+      "organizationId": "cfm-1"
     }
   ],
   "rooms": [

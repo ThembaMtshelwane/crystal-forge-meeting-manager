@@ -74,7 +74,7 @@ watch(
       </div>
     </v-app-bar>
 
-    <v-main class="bg-gray-50">
+    <v-main class="bg-linear-to-br from-blue-50 to-blue-100">
       <section class="pa-8">
         <router-view />
       </section>

@@ -55,6 +55,12 @@ const isOpen = computed({
   z-index: 10;
 }
 
+.close-button:hover{
+  background-color: red;
+  opacity: 50%;
+  color: white;
+}
+
 /* Ensure the v-card takes up the full width allowed by v-dialog */
 .v-card {
   width: 100%;

@@ -77,7 +77,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="text-h6 text-center text-blue-darken-2 mb-4">
+  <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
     Create A New Room
   </div>
   <v-form ref="formRef" @submit.prevent class="pa-4">

@@ -3,6 +3,7 @@ import { useAuthStore } from "@/store/auth.store";
 import { ILoginUser } from "@/types/user.types";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import type { VForm } from "vuetify/components";
 
 // --- Login logic ---
@@ -26,6 +27,7 @@ const emailRule = (value: string) => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return pattern.test(value) || "Invalid email format.";
 };
+const toast = useToast();
 
 // --- Routing ----
 const router = useRouter();
@@ -50,29 +52,27 @@ const handleLogin = async () => {
 
     try {
       const res = await authStore.login(payload);
-      //#TODO: Add toastify
-      console.log(res.message);
+      toast.success(res.message);
       router.push({ name: "Dashboard" });
       emit("success");
     } catch (error) {
       errorMessage.value =
         authStore.error || "An unknown error occurred during login.";
-      //#TODO: Add toastify
-      console.error("❌ Login failed:", errorMessage.value);
+      toast.error(errorMessage.value);
     } finally {
       isLoading.value = false;
     }
     form.value?.reset();
   } else {
-    //#TODO: Add toastify
-    console.log("❌ Login validation failed. Please correct the errors.");
+    toast.error(" Login validation failed. Please correct the errors.");
   }
 };
 </script>
 
 <template>
-  <div class="text-h6 text-center text-blue-darken-2 mb-4">Welcome Back!</div>
-
+  <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
+    Welcome Back!
+  </div>
   <v-form ref="form" @submit.prevent="handleLogin">
     <div class="text-subtitle-1 text-medium-emphasis">Email</div>
     <v-text-field
@@ -106,23 +106,23 @@ const handleLogin = async () => {
 
     <v-btn
       type="submit"
-      class="mb-4"
-      color="blue"
+      class="mb-4 mt-2"
+      color="primary"
       size="large"
-      variant="tonal"
+      variant="flat"
       block
     >
       Log In
     </v-btn>
   </v-form>
 
-  <v-card-text class="text-center">
+  <!-- <v-card-text class="text-center">
     <a
       class="text-blue text-decoration-none font-weight-bold text-sm!"
       href="#"
       rel="noopener noreferrer"
     >
       Create an Account <v-icon icon="mdi-chevron-right"></v-icon>
-    </a>
-  </v-card-text>
+    </a> 
+  </v-card-text>-->
 </template>

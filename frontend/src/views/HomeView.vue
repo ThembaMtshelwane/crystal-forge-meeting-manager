@@ -209,7 +209,7 @@ const handleSuccessfulLogin = () => {
             <v-card class="max-w-4xl mx-auto">
               <v-card-text class="py-12 px-8">
                 <div class="flex items-start gap-6 flex-col md:flex-row">
-                  <div class="flex-shrink-0">
+                  <div class="shrink-0">
                     <div
                       class="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center"
                     >

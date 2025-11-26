@@ -124,7 +124,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="text-h6 text-center text-blue-darken-2 mb-4">Edit Meeting</div>
+  <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
+    Edit Meeting
+  </div>
+
   <v-form ref="formRef" @submit.prevent class="pa-4">
     <div class="space-y-6">
       <v-text-field

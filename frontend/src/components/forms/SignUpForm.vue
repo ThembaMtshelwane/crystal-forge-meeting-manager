@@ -3,6 +3,7 @@ import { useAuthStore } from "@/store/auth.store";
 import { IRegisterUser } from "@/types/user.types";
 import { reactive, ref, defineEmits } from "vue";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import type { VForm } from "vuetify/components";
 
 // --- Sign up logic ---
@@ -33,6 +34,8 @@ const emailRule = (value: string) => {
 const passwordRule = (value: string) =>
   value.length >= 8 || "Password must be at least 8 characters.";
 
+const toast = useToast();
+
 // --- Routing ----
 const router = useRouter();
 
@@ -59,30 +62,27 @@ const handleSignUp = async () => {
 
     try {
       const res = await authStore.register(payload);
-      //#TODO: Add toastify
-      console.log(res.message);
+      toast.success(res.message);
       router.push({ name: "Dashboard" });
       emit("success");
     } catch (error) {
       errorMessage.value =
         authStore.error || "An unknown error occurred during registration.";
-      //#TODO: Add toastify
-      console.error("❌ Registration failed:", errorMessage.value);
+      toast.error(" Registration failed:");
     } finally {
       isLoading.value = false;
     }
 
     form.value?.reset();
   } else {
-    //#TODO: Add toastify
-    console.log("❌ Form validation failed. Please correct the errors.");
+    toast.error("Form validation failed. Please correct the errors.");
   }
 };
 </script>
 
 <template>
-  <div class="text-h6 text-center text-blue-darken-2 mb-4">
-    Create Your Account
+  <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
+    Create Your Account.
   </div>
 
   <v-form ref="form" @submit.prevent="handleSignUp">
@@ -185,16 +185,16 @@ const handleSignUp = async () => {
     <v-btn
       type="submit"
       class="mb-4 mt-2"
-      color="blue"
+      color="primary"
       size="large"
-      variant="tonal"
+      variant="flat"
       block
     >
       Create Account
     </v-btn>
   </v-form>
 
-  <v-card-text class="text-center">
+  <!-- <v-card-text class="text-center">
     <div class="text-medium-emphasis mb-2">Already have an account?</div>
     <a
       class="text-blue text-decoration-none font-weight-bold"
@@ -203,5 +203,5 @@ const handleSignUp = async () => {
     >
       Go to Log In <v-icon icon="mdi-chevron-right"></v-icon>
     </a>
-  </v-card-text>
+  </v-card-text> -->
 </template>

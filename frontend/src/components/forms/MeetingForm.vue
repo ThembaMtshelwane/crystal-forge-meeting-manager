@@ -90,7 +90,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="text-h6 text-center text-blue-darken-2 mb-4">
+  <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
     Create A New Meeting
   </div>
   <!-- Vuetify Form Wrapper with Validation Ref -->

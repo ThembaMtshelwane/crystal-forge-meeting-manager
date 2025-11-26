@@ -43,10 +43,10 @@ const availableLinks = computed(() =>
     :permanent="isPermanent"
     :temporary="!isPermanent"
     :rail="false"
-    class="border-r border-blue-100"
+    class="border-r border-blue-100 "
   >
     <!-- User Profile Section -->
-    <div class="pa-6 bg-gradient-to-br from-blue-600 to-blue-700">
+    <div class="pa-6 bg-linear-to-br from-blue-600 to-blue-700">
       <div class="flex items-center gap-4">
         <v-avatar size="56" color="white" class="shadow-md">
           <v-icon icon="mdi-account-circle" size="56" color="primary"></v-icon>
