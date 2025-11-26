@@ -24,7 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container fluid class="pa-4 pa-md-6">
+
     <!-- Header Section -->
     <v-row>
       <v-col cols="12">
@@ -57,5 +57,5 @@ onMounted(async () => {
         </ItemsGrid>
       </v-col>
     </v-row>
-  </v-container>
+
 </template>

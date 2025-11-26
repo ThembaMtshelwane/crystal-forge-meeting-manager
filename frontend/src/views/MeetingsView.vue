@@ -25,40 +25,38 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container fluid class="pa-4 pa-md-6">
-    <!-- Header Section -->
-    <v-row>
-      <v-col cols="12">
-        <div>
-          <h1 class="text-h4 font-weight-bold text-blue-darken-2">
-            All Meetings
-          </h1>
-          <p class="text-subtitle-1 text-medium-emphasis">
-            See all of your meetings
-          </p>
-        </div>
+  <!-- Header Section -->
+  <v-row>
+    <v-col cols="12">
+      <div>
+        <h1 class="text-h4 font-weight-bold text-blue-darken-2">
+          All Meetings
+        </h1>
+        <p class="text-subtitle-1 text-medium-emphasis">
+          See all of your meetings
+        </p>
+      </div>
 
-        <v-divider class="mt-4"></v-divider>
-      </v-col>
-    </v-row>
+      <v-divider class="mt-4"></v-divider>
+    </v-col>
+  </v-row>
 
-    <v-row class="mb-2">
-      <v-btn class="mr-auto!" @click="addModalOpen = true">
-        Create a meeting</v-btn
-      >
-      <Modal v-model="addModalOpen" max-width="600">
-        <MeetingForm @success="closeModal" />
-      </Modal>
-    </v-row>
-    <!-- Meetings Grid Section -->
-    <v-row>
-      <v-col cols="12">
-        <ItemsGrid :items="meetings">
-          <template #item="{ itemData }">
-            <MeetingCard v-bind="itemData" :key="itemData.id" />
-          </template>
-        </ItemsGrid>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row class="mb-2">
+    <v-btn class="mr-auto!" @click="addModalOpen = true">
+      Create a meeting</v-btn
+    >
+    <Modal v-model="addModalOpen" max-width="600">
+      <MeetingForm @success="closeModal" />
+    </Modal>
+  </v-row>
+  <!-- Meetings Grid Section -->
+  <v-row>
+    <v-col cols="12">
+      <ItemsGrid :items="meetings">
+        <template #item="{ itemData }">
+          <MeetingCard v-bind="itemData" :key="itemData.id" />
+        </template>
+      </ItemsGrid>
+    </v-col>
+  </v-row>
 </template>
