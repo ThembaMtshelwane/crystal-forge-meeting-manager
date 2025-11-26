@@ -14,8 +14,15 @@ onMounted(async () => {
 </script>
 
 <template>
+  <h1 class="text-h4 font-weight-bold text-blue-darken-2">Current Users</h1>
+
   <ul>
-    <li v-for="user in users">{{ user.firstName }}</li>
+    <li class="capitalize" v-for="user in users">
+      {{ user.firstName }} {{ user.lastName }} - {{ user.role }}
+    </li>
   </ul>
-  <h1>Dash Page</h1>
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <div class="flex w-full absolute">
+    <p class="text-3xl sm:text-7xl text-primary font-extrabold">Work in Progress!</p>
+  </div>
 </template>
