@@ -15,11 +15,12 @@ import axios from "axios";
 defineExpose({
   submitForm,
 });
+
 const isLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 
 const emit = defineEmits<{
-  (e: "updated", payload: IMeetingCreate): void;
+  updated: [id: string];
 }>();
 
 const props = defineProps<{
@@ -41,6 +42,7 @@ const defaultStart = getDefaultStartTime();
 const defaultEnd = getDefaultEndTime(defaultStart);
 const roomStore = useRoomStore();
 const { rooms } = storeToRefs(roomStore);
+
 // --- Form state ---
 const formRef = ref<InstanceType<typeof VForm> | null>(null);
 const formData = reactive<IMeetingCreate>({
@@ -52,7 +54,7 @@ const formData = reactive<IMeetingCreate>({
   roomId: props.meeting?.roomId || "",
 });
 
-// --- Validation Rules (Omitted for brevity, but kept as is) ---
+// --- Validation Rules ---
 const rules = {
   required: (v: string) => !!v || "This field is required.",
   futureDate: (v: string) => {
@@ -72,7 +74,7 @@ const rules = {
 };
 
 const toast = useToast();
-const MEETING_URL = "api/meetings"; // 👈 ADDED: Define the API URL
+const MEETING_URL = "api/meetings";
 
 // --- Submit Logic ---
 async function submitForm() {
@@ -98,7 +100,11 @@ async function submitForm() {
     }>(`${MEETING_URL}/${props.meeting?.id}`, payload);
 
     toast.success(response.data.message || "Meeting successfully updated!");
-    emit("updated", payload);
+
+    // Emit the updated event with the meeting ID
+    emit("updated", props.meeting?.id || "");
+
+    return true;
   } catch (error) {
     console.error("Meeting update failed:", error);
     const errorMessage = axios.isAxiosError(error)
@@ -144,6 +150,7 @@ onMounted(async () => {
           />
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12" class="py-0">
           <div class="d-flex flex-col sm:flex-row align-center">
@@ -183,6 +190,7 @@ onMounted(async () => {
         prepend-inner-icon="mdi-office-building"
         placeholder="Choose a room for the meeting"
       />
+
       <v-textarea
         v-model="formData.description"
         :rules="[rules.required, rules.maxDescription]"
@@ -199,9 +207,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-/* Vuetify handles most styling, but this ensures good spacing */
 .space-y-6 > * {
-  margin-top: 1.5rem !important; /* Tailwind space-y-6 equivalent */
+  margin-top: 1.5rem !important;
   margin-bottom: 0 !important;
 }
 .space-y-6 > :first-child {

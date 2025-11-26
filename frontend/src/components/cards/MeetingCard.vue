@@ -39,7 +39,15 @@ function handleMeetingDeleted(id: string) {
   // Close the modal
   detailsModalOpen.value = false;
   
-  // Optionally refresh the meetings list
+  // Refresh the meetings list
+  meetingStore.getMeetings();
+}
+
+function handleMeetingUpdated(id: string) {
+  // Close the modal
+  detailsModalOpen.value = false;
+  
+  // Refresh the meetings list to show updated data
   meetingStore.getMeetings();
 }
 </script>
@@ -115,6 +123,7 @@ function handleMeetingDeleted(id: string) {
         status: props.status,
       }"
       @deleted="handleMeetingDeleted"
+      @updated="handleMeetingUpdated"
     />
   </Modal>
 </template>

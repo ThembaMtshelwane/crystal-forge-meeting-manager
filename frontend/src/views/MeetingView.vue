@@ -24,6 +24,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   deleted: [id: string];
+  updated: [id: string];
 }>();
 
 const editFormRef = ref<InstanceType<typeof EditMeetingForm> | null>(null);
@@ -45,8 +46,10 @@ const formattedDate = computed(() => {
   });
 });
 
-function handleUpdated() {
-  isEditable.value = false; 
+function handleUpdated(id: string) {
+  isEditable.value = false;
+  // Emit the updated event to parent
+  emit("updated", id);
 }
 
 async function deleteMeeting() {
@@ -93,7 +96,7 @@ async function deleteMeeting() {
     <ConfirmForm
       :actionText="`deleting the meeting: ${props.meeting.title}`"
       actionColor="red-darken-2"
-      buttonText="Delete "
+      buttonText="Delete Meeting"
       @close="isConfirmingDelete = false"
       @success="deleteMeeting"
       :is-loading="isLoadingDelete"
