@@ -89,7 +89,7 @@ async function deleteRoom() {
   <!-- Room View/Edit Content -->
   <section v-if="!isEditable">
     <div class="mb-4">
-      <h1 class="text-h4 font-bold text-primary capitalize">
+      <h1 class="text-h4 font-bold text-primary capitalize!">
         {{ room.name }}
       </h1>
     </div>
@@ -109,11 +109,7 @@ async function deleteRoom() {
 
       <!-- Capacity -->
       <div class="flex items-center gap-3">
-        <v-icon
-          icon="mdi-account-group"
-          size="28"
-          color="primary"
-        ></v-icon>
+        <v-icon icon="mdi-account-group" size="28" color="primary"></v-icon>
         <div>
           <p class="font-semibold">Capacity</p>
           <p class="text-medium-emphasis">{{ room.capacity }} people</p>

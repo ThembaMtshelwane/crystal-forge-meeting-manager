@@ -53,12 +53,13 @@ function handleMeetingUpdated(id: string) {
 </script>
 
 <template>
-  <v-card
-    :title="props.title"
-    :subtitle="`Organized by: ${meetingOrganizedBy?.username}`"
-    elevation="3"
-    class="d-flex flex-column pa-4"
-  >
+  <v-card elevation="3" class="d-flex flex-column pa-4">
+    <v-card-title class="capitalize!">
+      {{ props.title }}
+    </v-card-title>
+    <v-card-subtitle class="capitalize! mb-2">
+      {{ `Organized by: ${meetingOrganizedBy?.firstName} ${meetingOrganizedBy?.lastName}` }}
+    </v-card-subtitle>
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>

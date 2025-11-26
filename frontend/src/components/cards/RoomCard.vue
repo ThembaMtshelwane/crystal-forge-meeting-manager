@@ -39,11 +39,10 @@ function handleRoomUpdated(id: string) {
 </script>
 
 <template>
-  <v-card
-    :title="props.name"
-    elevation="3"
-    class="d-flex flex-column h-[275px] pa-4"
-  >
+  <v-card elevation="3" class="d-flex flex-column h-[275px] pa-4">
+    <v-card-title class="capitalize!">
+      {{ props.name }}
+    </v-card-title>
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">
         <v-icon start icon="mdi-map-marker" size="small"></v-icon>

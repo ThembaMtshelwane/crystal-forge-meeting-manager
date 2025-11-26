@@ -103,11 +103,16 @@ async function deleteMeeting() {
   </Modal>
 
   <!-- Meeting View/Edit Content -->
-  <section v-if="!isEditable">
+  <section class="capitalize!" v-if="!isEditable">
     <div class="mb-4">
-      <h1 class="text-h4 font-bold text-primary">{{ meeting.title }}</h1>
+      <h1 class="text-h4 font-bold text-primary capitalize!">
+        {{ meeting.title }}
+      </h1>
       <p class="text-medium-emphasis mt-1">
-        Created by <strong>{{ meeting.organizer }}</strong>
+        Created by:
+        <span
+          ><strong>{{ meeting.organizer }}</strong></span
+        >
       </p>
     </div>
 
