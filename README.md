@@ -7,6 +7,25 @@ room booking within an organization. It provides a simple, yet
 comprehensive solution for users to create, manage, and track meetings
 while efficiently handling the allocation of available conference rooms.
 
+## Approach
+
+This a multiuser platofrm. A user can register an account and login. There are two user types - i.e member and admin. All users that
+register an account will be assigned as member. Only the superAdmin (me), can create a new admin. Currently there is only one admin and
+thier details are:
+
+```bash
+# Admin details
+eamil: admin@cfm.com
+password: admin123
+```
+
+There are three main data collections, - i.e Users, Rooms and Meetings all stored in the db.json file. Once logged in, the admin has
+access to CRUD (Create, Read, Update and Delete) all the collections while the memeber users have access to CRUD Meetings, only read
+from Rooms and Meeting. The API endpoints are integrated through a combination of Pinia and simple axios requests.
+Pages from here on out use the DashboardLayout, which is defined using Vuetify's ready made components and Vueouter's router-view.
+This give consistency and allows easy naviation betweeen pages.
+The backed is trully extensive and thus has the ability to scale, especially as a SaaS (software as a Service)
+
 ## 🔑 Key Features
 
 | Feature                 | Description                                                               |
@@ -14,7 +33,7 @@ while efficiently handling the allocation of available conference rooms.
 | **Meeting Management**  | Schedule, organize, edit, and delete meetings efficiently.                |
 | **Room Booking**        | Book and manage meeting rooms with ease, linking a meeting to a resource. |
 | **Team Collaboration**  | Facilitate collaboration by having a central system for meetings.         |
-| **Analytics Dashboard** | Track meeting statistics and resource usage insights.          |
+| **Analytics Dashboard** | Track meeting statistics and resource usage insights.                     |
 
 ---
 
