@@ -67,13 +67,12 @@ async function deleteMeeting() {
     }>(`${MEETING_URL}/${props.meeting.id}`);
 
     toast.success(response.data.message || "Meeting successfully deleted!");
-    
+
     // Close the modal and confirmation form
     isConfirmingDelete.value = false;
-    
+
     // Emit the deleted event to parent
     emit("deleted", props.meeting.id);
-    
   } catch (error) {
     console.error("Meeting deletion failed:", error);
     const errorMessage = axios.isAxiosError(error)
@@ -91,12 +90,12 @@ async function deleteMeeting() {
   <Modal
     v-model="isConfirmingDelete"
     title="Confirmation Required"
-    max-width="400"
+    max-width="500"
   >
     <ConfirmForm
       :actionText="`deleting the meeting: ${props.meeting.title}`"
       actionColor="red-darken-2"
-      buttonText="Delete Meeting"
+      buttonText="Delete"
       @close="isConfirmingDelete = false"
       @success="deleteMeeting"
       :is-loading="isLoadingDelete"
@@ -106,7 +105,7 @@ async function deleteMeeting() {
   <!-- Meeting View/Edit Content -->
   <section v-if="!isEditable">
     <div class="mb-4">
-      <h1 class="text-h4 font-bold text-blue-darken-2">{{ meeting.title }}</h1>
+      <h1 class="text-h4 font-bold text-primary">{{ meeting.title }}</h1>
       <p class="text-medium-emphasis mt-1">
         Created by <strong>{{ meeting.organizer }}</strong>
       </p>
@@ -193,7 +192,7 @@ async function deleteMeeting() {
   <div class="flex justify-end gap-4">
     <v-btn
       @click="isEditable ? editFormRef?.submitForm() : (isEditable = true)"
-      color="blue-darken-2"
+      color="primary"
       variant="flat"
     >
       <v-icon v-if="!isEditable" start icon="mdi-pencil"></v-icon>

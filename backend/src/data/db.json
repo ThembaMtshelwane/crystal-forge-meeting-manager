@@ -26,9 +26,9 @@
   "rooms": [
     {
       "id": "r1001",
-      "name": "Boardroom Alpha",
-      "description": "Main presentation room with video conferencing equipment and large monitor.",
-      "location": "4th Floor, West Wing",
+      "name": "boardroom alpha b",
+      "description": "main presentation room with video conferencing equipment and large monitor.",
+      "location": "4th floor, west wing",
       "organisationId": "ORG-A001",
       "capacity": "4",
       "bookings": [
@@ -64,10 +64,10 @@
     },
     {
       "id": "3fc18002-592b-4aca-9391-f2e10843a944",
-      "name": "xxxxxxxx",
-      "capacity": "18",
-      "description": "xxxxxxxxxxxxxx",
-      "location": "x floor",
+      "name": "yyyyyy",
+      "capacity": "16",
+      "description": "yyyyyyyyy",
+      "location": "y floor",
       "organisationId": "org1",
       "meetings": []
     }

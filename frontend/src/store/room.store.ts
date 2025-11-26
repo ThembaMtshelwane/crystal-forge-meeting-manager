@@ -63,6 +63,7 @@ export const useRoomStore = defineStore("room", () => {
       const newRoom = response.data.data as IRoomResponse;
 
       (rooms.value as IRoomResponse[]).push(newRoom);
+      return response.data.data
     } catch (err: any) {
       error.value = "Failed to create a room.";
       console.error("API Error:", err);

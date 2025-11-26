@@ -5,9 +5,12 @@ import { reactive, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { VForm } from "vuetify/components";
 
-// --- Meeting creation logic ---
 const roomStore = useRoomStore();
-const emit = defineEmits(["success", "close"]);
+const emit = defineEmits<{
+  success: [id?: string];
+  close: [];
+}>();
+
 const isLoading = ref(false);
 const errorMessage = ref<string | null>(null);
 
@@ -27,10 +30,11 @@ const rules = {
   maxLocation: (value: string) =>
     value?.length <= 25 || "Location must be 25 characters or less.",
   maxDescription: (value: string) =>
-    value?.length <= 500 || "Description must be 25 characters or less.",
+    value?.length <= 500 || "Description must be 500 characters or less.",
   minCapacity: (value: number) => value >= 1 || "Capacity must be at least 1.",
   maxCapacity: (value: number) => value <= 20 || "Capacity cannot exceed 20.",
 };
+
 const toast = useToast();
 
 const handleSubmit = async () => {
@@ -54,7 +58,9 @@ const handleSubmit = async () => {
     const res = await roomStore.createRoom(payload);
     if (res) {
       toast.success("Room successfully created!");
-      emit("success");
+      formRef.value?.reset();
+      // Emit success with the room ID if available
+      emit("success", res.id);
     }
   } catch (error) {
     console.error("Room creation failed:", error);
@@ -63,7 +69,6 @@ const handleSubmit = async () => {
   } finally {
     isLoading.value = false;
   }
-  formRef.value?.reset();
 };
 
 defineExpose({
@@ -85,10 +90,10 @@ defineExpose({
         variant="outlined"
         density="comfortable"
         prepend-inner-icon="mdi-format-title"
-        placeholder="e.g. The Aflred Hall"
+        placeholder="e.g. The Alfred Hall"
       />
 
-      <!-- Room Location  -->
+      <!-- Room Location -->
       <v-text-field
         v-model="formData.location"
         :rules="[rules.required, rules.maxLocation]"
@@ -99,7 +104,7 @@ defineExpose({
         placeholder="e.g. 2nd Floor"
       />
 
-      <!-- Romm Capacity -->
+      <!-- Room Capacity -->
       <v-text-field
         v-model.number="formData.capacity"
         :rules="[rules.required, rules.minCapacity, rules.maxCapacity]"
@@ -108,10 +113,11 @@ defineExpose({
         variant="outlined"
         density="comfortable"
         prepend-inner-icon="mdi-account-group"
-        placeholder="Enter room capacity (1–20)"
+        placeholder="Enter room capacity (1-20)"
         min="1"
         max="20"
       />
+
       <!-- Description -->
       <v-textarea
         v-model="formData.description"
@@ -122,7 +128,7 @@ defineExpose({
         rows="3"
         max-rows="6"
         prepend-inner-icon="mdi-text-box-outline"
-        placeholder="Provide agenda details or key objectives..."
+        placeholder="Provide room details or features..."
       />
     </div>
 
@@ -141,9 +147,8 @@ defineExpose({
 </template>
 
 <style scoped>
-/* Vuetify handles most styling, but this ensures good spacing */
 .space-y-6 > * {
-  margin-top: 1.5rem !important; /* Tailwind space-y-6 equivalent */
+  margin-top: 1.5rem !important;
   margin-bottom: 0 !important;
 }
 .space-y-6 > :first-child {
