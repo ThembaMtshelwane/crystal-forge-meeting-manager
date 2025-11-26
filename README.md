@@ -7,16 +7,14 @@ room booking within an organization. It provides a simple, yet
 comprehensive solution for users to create, manage, and track meetings
 while efficiently handling the allocation of available conference rooms.
 
-
-
 ## 🔑 Key Features
 
-| Feature                 | Description                                                                 |
-|-------------------------|-----------------------------------------------------------------------------|
-| **Meeting Management**  | Schedule, organize, edit, and delete meetings efficiently.                  |
-| **Room Booking**        | Book and manage meeting rooms with ease, linking a meeting to a resource.   |
-| **Team Collaboration**  | Facilitate collaboration by having a central system for meetings.           |
-| **Analytics Dashboard** | *(Future)* Track meeting statistics and resource usage insights.            |
+| Feature                 | Description                                                               |
+| ----------------------- | ------------------------------------------------------------------------- |
+| **Meeting Management**  | Schedule, organize, edit, and delete meetings efficiently.                |
+| **Room Booking**        | Book and manage meeting rooms with ease, linking a meeting to a resource. |
+| **Team Collaboration**  | Facilitate collaboration by having a central system for meetings.         |
+| **Analytics Dashboard** | _(Future)_ Track meeting statistics and resource usage insights.          |
 
 ---
 
@@ -25,33 +23,14 @@ while efficiently handling the allocation of available conference rooms.
 This project follows a standard decoupled architecture, splitting the
 application into a **frontend client** and a **backend API**.
 
-  -----------------------------------------------------------------------
-  Component             Technology              Description
-  --------------------- ----------------------- -------------------------
-  **Frontend**          **Vue 3 (Composition    The reactive and
-                        API)**                  component-based user
-                                                interface.
-
-  **State Management**  **Pinia**               The intuitive, type-safe
-                                                store for application
-                                                state.
-
-  **UI Framework**      **Vuetify 3**           Comprehensive and
-                                                accessible component
-                                                library for Material
-                                                Design.
-
-  **Backend**           *Node.js/Express*       Handles API requests,
-                                                business logic, and
-                                                database interaction.
-
-  **Database**          **In memory - used      Stores user, meeting, 
-                        a json file,db.json     and room data.
-                         **  
-  -----------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
+| Component            | Technology                  | Description                                                         |
+| -------------------- | --------------------------- | ------------------------------------------------------------------- |
+| **Frontend**         | **Vue 3 (Composition API)** | The reactive and component-based user interface.                    |
+| **State Management** | **Pinia**                   | The intuitive, type-safe store for application state.               |
+| **UI Framework**     | **Vuetify 3**               | Comprehensive and accessible component library for Material Design. |
+| **Backend**          | **Node.js/Express**         | Handles API requests, business logic, and database interaction.     |
+| **Database**         | **In-memory (db.json)**     | Stores user, meeting, and room data using a JSON file as storage.   |
+---
 
 ## 🏃 Getting Started
 
@@ -74,8 +53,8 @@ cd backend
 npm install
 npm run dev
 ```
-🚀 Server listening on **http://localhost:5000**
----
+
+## 🚀 Server listening on **http://localhost:5000**
 
 ### 3️⃣ Frontend Setup (Vue Application)
 
@@ -120,7 +99,6 @@ multiple views.
 ## 📈 Future Improvements (Roadmap)
 
 Several key enhancements are planned to improve the system:
-
 
 ### ✔ Data Isolation
 
