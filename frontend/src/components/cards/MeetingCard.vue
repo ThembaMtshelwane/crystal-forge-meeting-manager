@@ -4,7 +4,6 @@ import { useUserStore } from "@/store/user.store";
 import { IMeetingResponse } from "@/types/meeting.types";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 import Modal from "../ui/Modal.vue";
 import MeetingView from "@/views/MeetingView.vue";
@@ -100,6 +99,7 @@ const deleteModalOpen = ref(false);
         location: `${roomForMeeting?.name || 'N/A'} - ${
           roomForMeeting?.location || 'N/A'
         }`,
+        roomId: props.roomId,
         organizer: meetingOrganizedBy?.username || 'Unknown',
         startTime: props.startTime,
         endTime: props.endTime,

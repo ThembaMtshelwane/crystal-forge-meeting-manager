@@ -6,7 +6,6 @@ import { ref } from "vue";
 export const useMeetingStore = defineStore("meeting", () => {
   const meetings = ref<IMeetingResponse[] | []>([]);
   const meeting = ref<IMeetingResponse | null>(null);
-
   const loading = ref(false);
   const error = ref<string | null>(null);
 
@@ -74,6 +73,28 @@ export const useMeetingStore = defineStore("meeting", () => {
       loading.value = false;
     }
   }
+
+  async function updateMeeting(id: string, updates: IMeetingCreate) {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await axios.patch<{
+        data: IMeetingResponse;
+        message: string;
+      }>(`${MEETING_URL}/${id}`, updates);
+
+      if (meeting.value && meeting.value.id === id) {
+        meeting.value = response.data.data;
+      }
+    } catch (err: any) {
+      error.value = `Failed to update meeting with ID ${id}.`;
+      console.error("API Error:", err);
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  }
   return {
     meeting,
     meetings,
@@ -83,5 +104,6 @@ export const useMeetingStore = defineStore("meeting", () => {
     getMeetings,
     getMeeting,
     createMeeting,
+    updateMeeting,
   };
 });

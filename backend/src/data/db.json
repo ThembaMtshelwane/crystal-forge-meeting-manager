@@ -31,7 +31,11 @@
       "location": "4th Floor, West Wing",
       "organisationId": "ORG-A001",
       "capacity": "4",
-      "bookings": ["b901", "b902", "b905"]
+      "bookings": [
+        "b901",
+        "b902",
+        "b905"
+      ]
     },
     {
       "id": "r1002",
@@ -40,7 +44,9 @@
       "location": "4th Floor",
       "organisationId": "ORG-A001",
       "capacity": "8",
-      "bookings": ["b903"]
+      "bookings": [
+        "b903"
+      ]
     },
     {
       "id": "r1003",
@@ -49,30 +55,35 @@
       "location": "Ground Floor",
       "organisationId": "ORG-A001",
       "capacity": "12",
-      "bookings": ["b904", "b906", "b907", "b908"]
+      "bookings": [
+        "b904",
+        "b906",
+        "b907",
+        "b908"
+      ]
     }
   ],
   "organizations": [],
   "meetings": [
     {
       "id": "m-6a0e2c1b-7f3d-4a92-8805-5c4b3a2d1e0f",
-      "title": "Product Feature Brainstorm: V2",
+      "title": "Product Feature Brainstorm: V7",
       "description": "Creative session to define core features for the next major release.",
       "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312",
-      "startTime": "09:00 AM",
-      "endTime": "10:00 AM",
-      "date": "01-12-2025",
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "date": "2025-12-12",
       "status": true,
-      "roomId": "r1001"
+      "roomId": "r1002"
     },
     {
       "id": "m-1c4b7e9d-3a5f-4d2c-8b10-6f8e7d5c4b3a",
       "title": "Team Sync-up (Daily Standup)",
       "description": "Quick daily meeting to review progress and blockers.",
       "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
-      "startTime": "11:00 AM",
-      "endTime": "12:00 PM",
-      "date": "02-12-2025",
+      "startTime": "11:00",
+      "endTime": "12:00",
+      "date": "2025-12-01",
       "status": true,
       "roomId": "r1002"
     },
@@ -81,9 +92,9 @@
       "title": "Client Follow-up: Project Alpha xxxxxxxxxxxx",
       "description": "Check-in with Client Alpha regarding deployment timeline and feedback.",
       "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
-      "startTime": "11:00 AM",
-      "endTime": "12:00 PM",
-      "date": "03-12-2025",
+      "startTime": "11:00",
+      "endTime": "12:00",
+      "date": "2025-12-03",
       "status": false,
       "roomId": "r1003"
     }
