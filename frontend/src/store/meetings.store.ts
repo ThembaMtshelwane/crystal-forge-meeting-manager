@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import type { IMeetingResponse } from "@/types/meeting.types.js";
+import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
-
+const MMETINGS_URL = "/api/meetings";
 export const useMeetingStore = defineStore("meetings", {
   state: () => ({
     meetings: [] as IMeetingResponse[],
@@ -18,11 +17,7 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(`${API_URL}/meetings`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(`${MMETINGS_URL}/`);
         this.meetings = response.data.data;
       } catch (error: any) {
         this.error =
@@ -38,11 +33,7 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(`${API_URL}/meetings/profile`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(`${MMETINGS_URL}/profile`);
         this.userMeetings = response.data.data;
         return response.data.data;
       } catch (error: any) {
@@ -60,11 +51,7 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get(`${API_URL}/meetings/user/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(`${MMETINGS_URL}/user/${userId}`);
         return response.data.data;
       } catch (error: any) {
         this.error =
@@ -81,12 +68,15 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.post(`${API_URL}/meetings`, meetingData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        this.meetings.push(response.data.data);
+        const response = await axios.post(`${MMETINGS_URL}/`, meetingData);
+        const newMeeting = response.data.data;
+
+        // Add to meetings array
+        this.meetings.push(newMeeting);
+
+        // Add to userMeetings array (since the current user is creating it)
+        this.userMeetings.push(newMeeting);
+
         return response.data;
       } catch (error: any) {
         this.error =
@@ -103,19 +93,22 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.patch(
-          `${API_URL}/meetings/${id}`,
-          updates,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        const index = this.meetings.findIndex((m) => m.id === id);
-        if (index !== -1) {
-          this.meetings[index] = response.data;
+        const response = await axios.patch(`${MMETINGS_URL}/${id}`, updates);
+
+        // Update in the meetings array
+        const meetingsIndex = this.meetings.findIndex((m) => m.id === id);
+        if (meetingsIndex !== -1) {
+          this.meetings[meetingsIndex] = response.data;
         }
+
+        // Update in the userMeetings array
+        const userMeetingsIndex = this.userMeetings.findIndex(
+          (m) => m.id === id
+        );
+        if (userMeetingsIndex !== -1) {
+          this.userMeetings[userMeetingsIndex] = response.data;
+        }
+
         return response.data;
       } catch (error: any) {
         this.error =
@@ -132,11 +125,7 @@ export const useMeetingStore = defineStore("meetings", {
       this.loading = true;
       this.error = null;
       try {
-        await axios.delete(`${API_URL}/meetings/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.delete(`${MMETINGS_URL}/${id}`);
         this.meetings = this.meetings.filter((m) => m.id !== id);
         this.userMeetings = this.userMeetings.filter((m) => m.id !== id);
       } catch (error: any) {

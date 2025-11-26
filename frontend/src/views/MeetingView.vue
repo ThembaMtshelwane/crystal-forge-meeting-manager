@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import EditMeetingForm from "@/components/forms/EditMeetingForm.vue";
-import { IMeetingCreate } from "@/types/meeting.types";
 import axios from "axios";
 import { useToast } from "vue-toastification";
 import ConfirmForm from "@/components/forms/ConfirmForm.vue";

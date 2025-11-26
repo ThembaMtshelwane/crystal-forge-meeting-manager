@@ -26,6 +26,6 @@ router
   .route("/:id")
   .get(authorizeRoles("admin", "member"), getMeeting)
   .patch(authorizeRoles("admin", "member"), updateMeeting)
-  .delete(authorizeRoles("admin"), deleteMeeting);
+  .delete(authorizeRoles("admin","member"), deleteMeeting);
 
 export default router;

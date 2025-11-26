@@ -1,82 +1,71 @@
 <script setup lang="ts">
+import { useMeetingStore } from "@/store/meetings.store";
 import { useRoomStore } from "@/store/room.store";
 import { IMeetingCreate } from "@/types/meeting.types";
-import {
-  getDefaultEndTime,
-  getDefaultStartTime,
-  getToday,
-} from "@/utils/date.utils";
 import { storeToRefs } from "pinia";
 import { onMounted, reactive, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { VForm } from "vuetify/components";
-import axios from "axios";
 
 defineExpose({
   submitForm,
 });
 
+const meetingStore = useMeetingStore();
+const roomStore = useRoomStore();
+const { rooms } = storeToRefs(roomStore);
+
 const isLoading = ref(false);
-const errorMessage = ref<string | null>(null);
 
 const emit = defineEmits<{
+  success: [];
   updated: [id: string];
 }>();
 
 const props = defineProps<{
-  meeting?: {
+  meeting: {
+    id: string;
     title: string;
     description: string;
-    date: string;
-    roomId: string;
     startTime: string;
     endTime: string;
-    status: boolean;
-    id: string;
+    date: string;
+    roomId: string;
+    status:boolean
   };
 }>();
 
-// Compute defaults
-const defaultDate = getToday();
-const defaultStart = getDefaultStartTime();
-const defaultEnd = getDefaultEndTime(defaultStart);
-const roomStore = useRoomStore();
-const { rooms } = storeToRefs(roomStore);
-
-// --- Form state ---
 const formRef = ref<InstanceType<typeof VForm> | null>(null);
 const formData = reactive<IMeetingCreate>({
-  title: props.meeting?.title || "",
-  description: props.meeting?.description || "",
-  date: props.meeting?.date || defaultDate,
-  startTime: props.meeting?.startTime || defaultStart,
-  endTime: props.meeting?.endTime || defaultEnd,
-  roomId: props.meeting?.roomId || "",
+  title: props.meeting.title || "",
+  description: props.meeting.description || "",
+  startTime: props.meeting.startTime || "09:00",
+  endTime: props.meeting.endTime || "10:00",
+  date: props.meeting.date || "",
+  roomId: props.meeting.roomId || "",
 });
 
 // --- Validation Rules ---
 const rules = {
-  required: (v: string) => !!v || "This field is required.",
-  futureDate: (v: string) => {
+  required: (value: string) => !!value || "This field is required.",
+  futureDate: (value: string) => {
     const today = new Date().toISOString().split("T")[0];
-    return v >= today || "The meeting date must be today or in the future.";
+    return value >= today || "The meeting date must be today or in the future.";
   },
-  timeOrder: (v: string) => {
-    if (formData.startTime && v <= formData.startTime) {
-      return "End time must be after start time.";
+  timeOrder: (value: string) => {
+    if (formData.startTime && value <= formData.startTime) {
+      return "End time must be after the start time.";
     }
     return true;
   },
-  maxTitle: (v: string) =>
-    v?.length <= 100 || "Title must be 100 characters or less.",
-  maxDescription: (v: string) =>
-    v?.length <= 500 || "Description must be 500 characters or less.",
+  maxTitle: (value: string) =>
+    value?.length <= 100 || "Title must be 100 characters or less.",
+  maxDescription: (value: string) =>
+    value?.length <= 500 || "Description must be 500 characters or less.",
 };
 
 const toast = useToast();
-const MEETING_URL = "api/meetings";
 
-// --- Submit Logic ---
 async function submitForm() {
   if (!formRef.value) return;
 
@@ -89,29 +78,27 @@ async function submitForm() {
   try {
     isLoading.value = true;
 
-    const payload = {
-      ...formData,
-      title: formData.title.trim(),
-      description: formData.description.trim(),
+    const payload: Partial<IMeetingCreate> = {
+      title: formData.title.trim().toLowerCase(),
+      description: formData.description.trim().toLowerCase(),
+      startTime: formData.startTime.trim().toLowerCase(),
+      endTime: formData.endTime.trim().toLowerCase(),
+      date: formData.date.trim().toLowerCase(),
+      roomId: formData.roomId.trim().toLowerCase(),
     };
 
-    const response = await axios.patch<{
-      message: string;
-    }>(`${MEETING_URL}/${props.meeting?.id}`, payload);
+    await meetingStore.updateMeeting(props.meeting.id, payload);
 
-    toast.success(response.data.message || "Meeting successfully updated!");
+    toast.success("Meeting successfully updated!");
 
-    // Emit the updated event with the meeting ID
-    emit("updated", props.meeting?.id || "");
+    // Emit events to trigger parent refresh and close modal
+    emit("updated", props.meeting.id);
+    emit("success");
 
     return true;
   } catch (error) {
     console.error("Meeting update failed:", error);
-    const errorMessage = axios.isAxiosError(error)
-      ? error.response?.data?.message ||
-        "Failed to update meeting. Please try again."
-      : "An unexpected error occurred.";
-    toast.error(errorMessage);
+    toast.error("Failed to update meeting. Please try again.");
     return false;
   } finally {
     isLoading.value = false;
@@ -127,9 +114,9 @@ onMounted(async () => {
   <div class="text-xl sm:text-2xl! font-bold! text-blue-darken-2 mb-8">
     Edit Meeting
   </div>
-
   <v-form ref="formRef" @submit.prevent class="pa-4">
     <div class="space-y-6">
+      <!-- Meeting Title -->
       <v-text-field
         v-model="formData.title"
         :rules="[rules.required, rules.maxTitle]"
@@ -140,6 +127,7 @@ onMounted(async () => {
         placeholder="e.g., Q3 Planning Session"
       />
 
+      <!-- Date -->
       <v-row>
         <v-col cols="12" class="py-0">
           <v-text-field
@@ -154,6 +142,7 @@ onMounted(async () => {
         </v-col>
       </v-row>
 
+      <!-- Time Range -->
       <v-row>
         <v-col cols="12" class="py-0">
           <div class="d-flex flex-col sm:flex-row align-center">
@@ -181,6 +170,7 @@ onMounted(async () => {
         </v-col>
       </v-row>
 
+      <!-- Room Selection -->
       <v-select
         v-model="formData.roomId"
         :items="rooms"
@@ -194,6 +184,7 @@ onMounted(async () => {
         placeholder="Choose a room for the meeting"
       />
 
+      <!-- Description -->
       <v-textarea
         v-model="formData.description"
         :rules="[rules.required, rules.maxDescription]"

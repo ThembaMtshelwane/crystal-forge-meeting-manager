@@ -8,6 +8,7 @@ import { computed, ref } from "vue";
 import { useDisplay } from "vuetify";
 import Modal from "../ui/Modal.vue";
 import MeetingView from "@/views/MeetingView.vue";
+import { useAuthStore } from "@/store/auth.store";
 
 const props = defineProps<IMeetingResponse>();
 const display = useDisplay();
@@ -25,7 +26,11 @@ const { rooms } = storeToRefs(roomStore);
 const userStore = useUserStore();
 const { users } = storeToRefs(userStore);
 const meetingStore = useMeetingStore();
+const authStore = useAuthStore();
 
+const user = computed(() => authStore.currentUser);
+
+const isAdmin = computed(() => user.value?.role === "admin");
 const roomForMeeting = computed(() => {
   return rooms.value.find((r) => r.id === props.roomId);
 });
@@ -41,6 +46,7 @@ function handleMeetingDeleted(id: string) {
 
   // Refresh the meetings list
   meetingStore.getMeetings();
+  meetingStore.getLoggedInUserMeetings();
 }
 
 function handleMeetingUpdated(id: string) {
@@ -58,7 +64,9 @@ function handleMeetingUpdated(id: string) {
       {{ props.title }}
     </v-card-title>
     <v-card-subtitle class="capitalize! mb-2">
-      {{ `Organized by: ${meetingOrganizedBy?.firstName} ${meetingOrganizedBy?.lastName}` }}
+      {{
+        `Organized by: ${meetingOrganizedBy?.firstName} ${meetingOrganizedBy?.lastName}`
+      }}
     </v-card-subtitle>
     <v-card-subtitle class="mb-2">
       <div class="d-flex align-center text-truncate">

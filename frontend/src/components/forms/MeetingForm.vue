@@ -73,6 +73,11 @@ async function submitForm() {
     toast.success(
       (res?.message as string) || "Meeting successfully scheduled!"
     );
+
+    // Reset form after successful creation
+    formRef.value?.reset();
+
+    // Emit success to trigger parent refresh and close modal
     emit("success");
   } catch (error) {
     console.error("Meeting creation failed:", error);
@@ -81,7 +86,6 @@ async function submitForm() {
   } finally {
     isLoading.value = false;
   }
-  formRef.value?.reset();
 }
 
 onMounted(async () => {

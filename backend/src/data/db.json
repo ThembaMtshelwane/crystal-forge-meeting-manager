@@ -87,8 +87,8 @@
   "meetings": [
     {
       "id": "m-6a0e2c1b-7f3d-4a92-8805-5c4b3a2d1e0f",
-      "title": "Product Feature Brainstorm: V1",
-      "description": "Creative session to define core features for the next major release.",
+      "title": "product feature brainstorm: v8",
+      "description": "creative session to define core features for the next major release.",
       "userId": "44d8baa1-2065-4d67-a74f-8db503f4a312",
       "startTime": "09:00",
       "endTime": "10:00",
@@ -116,28 +116,6 @@
       "endTime": "12:00",
       "date": "2025-12-03",
       "status": false,
-      "roomId": "r1003"
-    },
-    {
-      "id": "b3c6b237-c057-408f-a577-9d9e6a9c2f5d",
-      "title": "xxxx",
-      "description": "xxxxxxxxxxxx",
-      "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "date": "2025-12-04",
-      "status": true,
-      "roomId": "3fc18002-592b-4aca-9391-f2e10843a944"
-    },
-    {
-      "id": "047131ff-b1c9-4087-8b17-d559020b94f2",
-      "title": "aaaaaa",
-      "description": "ssssssssss",
-      "userId": "1349f0c0-9c30-43ae-bfbe-7da14372cce1",
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "date": "2025-12-06",
-      "status": true,
       "roomId": "r1003"
     }
   ]

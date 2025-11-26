@@ -20,15 +20,21 @@ const addModalOpen = ref(false);
 const showMyMeetingsOnly = ref(true);
 
 const user = computed(() => authStore.currentUser);
-const isAdmin = computed(() => user.value?.role === "admin");
+const isAdmin = computed(() => user.value?.role === 'admin');
 
 // Computed property to show either all meetings or user's meetings
 const displayedMeetings = computed(() => {
   return showMyMeetingsOnly.value ? userMeetings.value : meetings.value;
 });
 
-const closeModal = () => {
+const closeModal = async () => {
   addModalOpen.value = false;
+  // Refresh the appropriate meetings list after creating a new meeting
+  if (showMyMeetingsOnly.value) {
+    await meetingStore.getLoggedInUserMeetings();
+  } else {
+    await meetingStore.getMeetings();
+  }
 };
 
 const toggleMeetingsView = async () => {
@@ -43,12 +49,12 @@ const toggleMeetingsView = async () => {
 onMounted(async () => {
   // Load user's meetings first
   await meetingStore.getLoggedInUserMeetings();
-
+  
   // If admin, also load all meetings for when they toggle
   if (isAdmin.value) {
     await meetingStore.getMeetings();
   }
-
+  
   await roomStore.getRooms();
   await userStore.getUsers();
 });
@@ -60,33 +66,29 @@ onMounted(async () => {
     <v-col cols="12">
       <div>
         <h1 class="text-h4 font-weight-bold text-blue-darken-2">
-          {{ showMyMeetingsOnly ? "My Meetings" : "All Meetings" }}
+          {{ showMyMeetingsOnly ? 'My Meetings' : 'All Meetings' }}
         </h1>
         <p class="text-subtitle-1 text-medium-emphasis">
-          {{
-            showMyMeetingsOnly
-              ? "View your scheduled meetings"
-              : "See all meetings in the organization"
-          }}
+          {{ showMyMeetingsOnly ? 'View your scheduled meetings' : 'See all meetings in the organization' }}
         </p>
       </div>
-
-  
 
       <v-divider class="mt-4"></v-divider>
     </v-col>
   </v-row>
 
   <v-row class="mb-2">
-    <v-btn class="mr-2" @click="addModalOpen = true"> Create a meeting </v-btn>
-
-    <v-btn
-      v-if="isAdmin"
+    <v-btn class="mr-2" @click="addModalOpen = true">
+      Create a meeting
+    </v-btn>
+    
+    <v-btn 
+    v-if="isAdmin"
       :color="showMyMeetingsOnly ? 'primary' : 'default'"
       @click="toggleMeetingsView"
       variant="outlined"
     >
-      {{ showMyMeetingsOnly ? "Show All Meetings" : "Show My Meetings" }}
+      {{ showMyMeetingsOnly ? 'Show All Meetings' : 'Show My Meetings' }}
     </v-btn>
 
     <Modal v-model="addModalOpen" max-width="600">
