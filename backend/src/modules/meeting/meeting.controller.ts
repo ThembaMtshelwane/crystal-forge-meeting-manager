@@ -9,8 +9,7 @@ import { IUser } from "../../types/user.types";
 // Create/book a meeting
 export const createMeeting = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    const { title, description, startTime, endTime, status, roomId, date } =
-      req.body;
+    const { title, description, startTime, endTime, roomId, date } = req.body;
 
     //#TODO: Update the checks, make sure there are no double bookings
     const meetings = (db.meetings as IMeeting[]).filter(
@@ -18,8 +17,7 @@ export const createMeeting = expressAsyncHandler(
         m.startTime === startTime &&
         m.endTime === endTime &&
         m.title === title &&
-        m.roomId === roomId &&
-        status === true
+        m.roomId === roomId
     );
 
     if (meetings.length !== 0) {
@@ -37,7 +35,7 @@ export const createMeeting = expressAsyncHandler(
       startTime,
       endTime,
       date,
-      status,
+      status: true,
       roomId,
     };
     db.meetings.push(newMeeting);

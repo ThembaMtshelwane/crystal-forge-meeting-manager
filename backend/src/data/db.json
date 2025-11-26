@@ -61,6 +61,15 @@
         "b907",
         "b908"
       ]
+    },
+    {
+      "id": "3fc18002-592b-4aca-9391-f2e10843a944",
+      "name": "xxxxxxxx",
+      "capacity": "18",
+      "description": "xxxxxxxxxxxxxx",
+      "location": "x floor",
+      "organisationId": "org1",
+      "meetings": []
     }
   ],
   "organizations": [],

@@ -93,7 +93,7 @@ async function deleteMeeting() {
     <ConfirmForm
       :actionText="`deleting the meeting: ${props.meeting.title}`"
       actionColor="red-darken-2"
-      buttonText="Delete Meeting"
+      buttonText="Delete "
       @close="isConfirmingDelete = false"
       @success="deleteMeeting"
       :is-loading="isLoadingDelete"
