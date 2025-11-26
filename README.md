@@ -14,7 +14,7 @@ while efficiently handling the allocation of available conference rooms.
 | **Meeting Management**  | Schedule, organize, edit, and delete meetings efficiently.                |
 | **Room Booking**        | Book and manage meeting rooms with ease, linking a meeting to a resource. |
 | **Team Collaboration**  | Facilitate collaboration by having a central system for meetings.         |
-| **Analytics Dashboard** | _(Future)_ Track meeting statistics and resource usage insights.          |
+| **Analytics Dashboard** | Track meeting statistics and resource usage insights.          |
 
 ---
 
@@ -123,8 +123,11 @@ assignments.
 
 ## ⏳ Development Journey : 35hrs
 
-This was a new and interesting experience to get to explore Vue and Vuetify. This program took me about 35 hours of coding and studying.
-I am proud of what I have achieved in these 35hrs. This has given me the confidence to know I can tackle any new framework that comes my way.
+This project was a new and exciting opportunity to explore both Vue and Vuetify in depth. I spent around 35 hours coding,
+researching, and experimenting — and I’m genuinely proud of what I accomplished in that time.
+
+The experience really boosted my confidence. It showed me that I’m capable of learning and adapting to any new
+framework that comes my way. To be fair, about 80% felt familiar, but that remaining 20% was exactly the challenge I needed to grow.
 
 ## 🙌 Contributions
 
