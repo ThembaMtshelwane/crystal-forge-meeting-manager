@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoomStore } from "@/store/room.store";
 import { useUserStore } from "@/store/user.store";
+import { useMeetingStore } from "@/store/meetings.store";
 import { IMeetingResponse } from "@/types/meeting.types";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
@@ -23,6 +24,7 @@ const roomStore = useRoomStore();
 const { rooms } = storeToRefs(roomStore);
 const userStore = useUserStore();
 const { users } = storeToRefs(userStore);
+const meetingStore = useMeetingStore();
 
 const roomForMeeting = computed(() => {
   return rooms.value.find((r) => r.id === props.roomId);
@@ -32,7 +34,14 @@ const meetingOrganizedBy = computed(() => {
 });
 
 const detailsModalOpen = ref(false);
-const deleteModalOpen = ref(false);
+
+function handleMeetingDeleted(id: string) {
+  // Close the modal
+  detailsModalOpen.value = false;
+  
+  // Optionally refresh the meetings list
+  meetingStore.getMeetings();
+}
 </script>
 
 <template>
@@ -105,6 +114,7 @@ const deleteModalOpen = ref(false);
         endTime: props.endTime,
         status: props.status,
       }"
+      @deleted="handleMeetingDeleted"
     />
   </Modal>
 </template>

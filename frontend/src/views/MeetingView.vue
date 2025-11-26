@@ -22,10 +22,13 @@ const props = defineProps<{
   };
 }>();
 
+const emit = defineEmits<{
+  deleted: [id: string];
+}>();
+
 const editFormRef = ref<InstanceType<typeof EditMeetingForm> | null>(null);
 
 const isEditable = ref(false);
-// 👈 ADDED: State for the confirmation dialog
 const isConfirmingDelete = ref(false);
 const isLoadingDelete = ref(false);
 
@@ -61,7 +64,13 @@ async function deleteMeeting() {
     }>(`${MEETING_URL}/${props.meeting.id}`);
 
     toast.success(response.data.message || "Meeting successfully deleted!");
+    
+    // Close the modal and confirmation form
     isConfirmingDelete.value = false;
+    
+    // Emit the deleted event to parent
+    emit("deleted", props.meeting.id);
+    
   } catch (error) {
     console.error("Meeting deletion failed:", error);
     const errorMessage = axios.isAxiosError(error)
@@ -80,7 +89,6 @@ async function deleteMeeting() {
     v-model="isConfirmingDelete"
     title="Confirmation Required"
     max-width="400"
-    @update:modelValue="isConfirmingDelete = $event"
   >
     <ConfirmForm
       :actionText="`deleting the meeting: ${props.meeting.title}`"
@@ -94,7 +102,6 @@ async function deleteMeeting() {
 
   <!-- Meeting View/Edit Content -->
   <section v-if="!isEditable">
-    <!-- ... (Existing display content) ... -->
     <div class="mb-4">
       <h1 class="text-h4 font-bold text-blue-darken-2">{{ meeting.title }}</h1>
       <p class="text-medium-emphasis mt-1">
