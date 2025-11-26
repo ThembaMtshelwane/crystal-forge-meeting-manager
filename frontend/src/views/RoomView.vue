@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import EditRoomForm from "@/components/forms/EditRoomForm.vue";
 import axios from "axios";
 import { useToast } from "vue-toastification";
 import ConfirmForm from "@/components/forms/ConfirmForm.vue";
 import Modal from "@/components/ui/Modal.vue";
+import { useAuthStore } from "@/store/auth.store";
 
 const props = defineProps<{
   room: {
@@ -26,7 +27,10 @@ const editFormRef = ref<InstanceType<typeof EditRoomForm> | null>(null);
 const isEditable = ref(false);
 const isConfirmingDelete = ref(false);
 const isLoadingDelete = ref(false);
+const authStore = useAuthStore();
 
+const user = computed(() => authStore.currentUser);
+const isAdmin = computed(() => user.value?.role === 'admin');
 const toast = useToast();
 const ROOM_URL = "api/rooms";
 
@@ -143,7 +147,7 @@ async function deleteRoom() {
   <v-divider class="my-6" />
 
   <!-- Action Buttons -->
-  <div class="flex justify-end gap-4">
+  <div v-if="isAdmin" class="flex justify-end gap-4">
     <v-btn
       @click="isEditable ? editFormRef?.submitForm() : (isEditable = true)"
       color="primary"

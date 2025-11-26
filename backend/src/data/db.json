@@ -72,15 +72,6 @@
         "b907",
         "b908"
       ]
-    },
-    {
-      "id": "3fc18002-592b-4aca-9391-f2e10843a944",
-      "name": "yyyyyy",
-      "capacity": "16",
-      "description": "yyyyyyyyy",
-      "location": "y floor",
-      "organisationId": "org1",
-      "meetings": []
     }
   ],
   "organizations": [],

@@ -16,5 +16,5 @@ router
   .route("/:id")
   .get(authorizeRoles("admin", "member"), getRoom)
   .patch(authorizeRoles("admin"), updateRoom)
-  .delete(authorizeRoles("admin", "member"), deleteRoom);
+  .delete(authorizeRoles("admin"), deleteRoom);
 export default router;
