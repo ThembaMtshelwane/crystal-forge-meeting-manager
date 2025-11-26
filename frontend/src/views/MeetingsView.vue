@@ -6,19 +6,49 @@ import Modal from "@/components/ui/Modal.vue";
 import { useMeetingStore } from "@/store/meetings.store";
 import { useRoomStore } from "@/store/room.store";
 import { useUserStore } from "@/store/user.store";
+import { useAuthStore } from "@/store/auth.store";
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const meetingStore = useMeetingStore();
 const roomStore = useRoomStore();
 const userStore = useUserStore();
-const { meetings } = storeToRefs(meetingStore);
+const authStore = useAuthStore();
+
+const { meetings, userMeetings } = storeToRefs(meetingStore);
 const addModalOpen = ref(false);
+const showMyMeetingsOnly = ref(true);
+
+const user = computed(() => authStore.currentUser);
+const isAdmin = computed(() => user.value?.role === "admin");
+
+// Computed property to show either all meetings or user's meetings
+const displayedMeetings = computed(() => {
+  return showMyMeetingsOnly.value ? userMeetings.value : meetings.value;
+});
+
 const closeModal = () => {
   addModalOpen.value = false;
 };
+
+const toggleMeetingsView = async () => {
+  showMyMeetingsOnly.value = !showMyMeetingsOnly.value;
+  if (showMyMeetingsOnly.value) {
+    await meetingStore.getLoggedInUserMeetings();
+  } else {
+    await meetingStore.getMeetings();
+  }
+};
+
 onMounted(async () => {
-  await meetingStore.getMeetings();
+  // Load user's meetings first
+  await meetingStore.getLoggedInUserMeetings();
+
+  // If admin, also load all meetings for when they toggle
+  if (isAdmin.value) {
+    await meetingStore.getMeetings();
+  }
+
   await roomStore.getRooms();
   await userStore.getUsers();
 });
@@ -30,29 +60,44 @@ onMounted(async () => {
     <v-col cols="12">
       <div>
         <h1 class="text-h4 font-weight-bold text-blue-darken-2">
-          All Meetings
+          {{ showMyMeetingsOnly ? "My Meetings" : "All Meetings" }}
         </h1>
         <p class="text-subtitle-1 text-medium-emphasis">
-          See all of your meetings
+          {{
+            showMyMeetingsOnly
+              ? "View your scheduled meetings"
+              : "See all meetings in the organization"
+          }}
         </p>
       </div>
+
+  
 
       <v-divider class="mt-4"></v-divider>
     </v-col>
   </v-row>
 
   <v-row class="mb-2">
-    <v-btn class="mr-auto!" @click="addModalOpen = true">
-      Create a meeting</v-btn
+    <v-btn class="mr-2" @click="addModalOpen = true"> Create a meeting </v-btn>
+
+    <v-btn
+      v-if="isAdmin"
+      :color="showMyMeetingsOnly ? 'primary' : 'default'"
+      @click="toggleMeetingsView"
+      variant="outlined"
     >
+      {{ showMyMeetingsOnly ? "Show All Meetings" : "Show My Meetings" }}
+    </v-btn>
+
     <Modal v-model="addModalOpen" max-width="600">
       <MeetingForm @success="closeModal" />
     </Modal>
   </v-row>
+
   <!-- Meetings Grid Section -->
   <v-row>
     <v-col cols="12">
-      <ItemsGrid :items="meetings">
+      <ItemsGrid :items="displayedMeetings">
         <template #item="{ itemData }">
           <MeetingCard v-bind="itemData" :key="itemData.id" />
         </template>

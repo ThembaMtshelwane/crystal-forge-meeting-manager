@@ -1,109 +1,152 @@
-import { IMeetingCreate, IMeetingResponse } from "@/types/meeting.types.js";
-import axios from "axios";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import axios from "axios";
+import type { IMeetingResponse } from "@/types/meeting.types.js";
 
-export const useMeetingStore = defineStore("meeting", () => {
-  const meetings = ref<IMeetingResponse[] | []>([]);
-  const meeting = ref<IMeetingResponse | null>(null);
-  const loading = ref(false);
-  const error = ref<string | null>(null);
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-  const MEETING_URL = "api/meetings";
+export const useMeetingStore = defineStore("meetings", {
+  state: () => ({
+    meetings: [] as IMeetingResponse[],
+    userMeetings: [] as IMeetingResponse[],
+    loading: false,
+    error: null as string | null,
+  }),
 
-  async function getMeetings() {
-    meetings.value = [];
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await axios.get<{
-        data: IMeetingResponse[];
-        message: string;
-      }>(`${MEETING_URL}/`);
-
-      meetings.value = response.data.data;
-    } catch (err: any) {
-      error.value = "Failed to fetch user data.";
-      console.error("API Error:", err);
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function getMeeting(id: string) {
-    meeting.value = null;
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await axios.get<{
-        data: IMeetingResponse;
-        message: string;
-      }>(`${MEETING_URL}/${id}`);
-      meeting.value = response.data.data;
-    } catch (err: any) {
-      error.value = `Failed to fetch user with ID ${id}.`;
-      console.error("API Error:", err);
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function createMeeting(payload: IMeetingCreate) {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await axios.post<{
-        data: IMeetingResponse;
-        message: string;
-      }>(`${MEETING_URL}/`, payload);
-
-      const newMeeting = response.data.data as IMeetingResponse;
-
-      (meetings.value as IMeetingResponse[]).push(newMeeting);
-
-      return { data: newMeeting, message: response.data.message };
-    } catch (err: any) {
-      error.value = "Failed to create meeting.";
-      console.error("API Error:", err);
-      return null;
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  async function updateMeeting(id: string, updates: IMeetingCreate) {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      const response = await axios.patch<{
-        data: IMeetingResponse;
-        message: string;
-      }>(`${MEETING_URL}/${id}`, updates);
-
-      if (meeting.value && meeting.value.id === id) {
-        meeting.value = response.data.data;
+  actions: {
+    // Fetch all meetings
+    async getMeetings() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.get(`${API_URL}/meetings`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        this.meetings = response.data.data;
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to fetch meetings";
+        console.error("Error fetching meetings:", error);
+      } finally {
+        this.loading = false;
       }
-    } catch (err: any) {
-      error.value = `Failed to update meeting with ID ${id}.`;
-      console.error("API Error:", err);
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  }
-  return {
-    meeting,
-    meetings,
-    loading,
-    error,
+    },
 
-    getMeetings,
-    getMeeting,
-    createMeeting,
-    updateMeeting,
-  };
+    // Fetch logged-in user's meetings
+    async getLoggedInUserMeetings() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.get(`${API_URL}/meetings/profile`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        this.userMeetings = response.data.data;
+        return response.data.data;
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to fetch user meetings";
+        console.error("Error fetching user meetings:", error);
+        return [];
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // Fetch meetings for a specific user (admin only)
+    async getUserMeetings(userId: string) {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.get(`${API_URL}/meetings/user/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        return response.data.data;
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to fetch user meetings";
+        console.error("Error fetching user meetings:", error);
+        return [];
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // Create a new meeting
+    async createMeeting(meetingData: Partial<IMeetingResponse>) {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.post(`${API_URL}/meetings`, meetingData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        this.meetings.push(response.data.data);
+        return response.data;
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to create meeting";
+        console.error("Error creating meeting:", error);
+        throw error;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // Update a meeting
+    async updateMeeting(id: string, updates: Partial<IMeetingResponse>) {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await axios.patch(
+          `${API_URL}/meetings/${id}`,
+          updates,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const index = this.meetings.findIndex((m) => m.id === id);
+        if (index !== -1) {
+          this.meetings[index] = response.data;
+        }
+        return response.data;
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to update meeting";
+        console.error("Error updating meeting:", error);
+        throw error;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // Delete a meeting
+    async deleteMeeting(id: string) {
+      this.loading = true;
+      this.error = null;
+      try {
+        await axios.delete(`${API_URL}/meetings/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        this.meetings = this.meetings.filter((m) => m.id !== id);
+        this.userMeetings = this.userMeetings.filter((m) => m.id !== id);
+      } catch (error: any) {
+        this.error =
+          error.response?.data?.message || "Failed to delete meeting";
+        console.error("Error deleting meeting:", error);
+        throw error;
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
 });
