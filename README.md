@@ -115,31 +115,6 @@ multiple views.
 
 ---
 
-## 📈 Future Improvements (Roadmap)
-
-Several key enhancements are planned to improve the system:
-
-### ✔ Data Isolation
-
-Ensure users can only view, edit, or delete their own meetings (except
-Admins).
-
-### ✔ Enhanced Scheduling Checks
-
-Prevent double-booking by querying for conflicting meetings before
-saving.
-
-### ✔ User Invitation System
-
-Allow organizers to invite users and track RSVP statuses.
-
-### ✔ Admin User Management
-
-Add an Admin interface for managing user accounts, suspensions, and role
-assignments.
-
----
-
 ## ⏳ Development Journey : 35hrs
 
 This project was a new and exciting opportunity to explore both Vue and Vuetify in depth. I spent around 35 hours coding,
