@@ -20,11 +20,6 @@
 
 Several key enhancements are planned to improve the system:
 
-### ✔ Data Isolation
-
-Ensure users can only view, edit, or delete their own meetings (except
-Admins).
-
 ### ✔ Enhanced Scheduling Checks
 
 Prevent double-booking by querying for conflicting meetings before
