@@ -9,6 +9,13 @@
     4. Only admins have access to the full details of a user.
 
 
+## Tradeoffs
+
+    1. The use of Pinia provides consitent and realtime data updates but its implementation 
+    could be considered overkill for this project. 
+
+
+
 ## 📈 Future Improvements (Roadmap)
 
 Several key enhancements are planned to improve the system:
