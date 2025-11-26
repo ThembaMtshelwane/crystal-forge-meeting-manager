@@ -2,6 +2,10 @@
 import { computed, ref } from "vue";
 import EditMeetingForm from "@/components/forms/EditMeetingForm.vue";
 import { IMeetingCreate } from "@/types/meeting.types";
+import axios from "axios";
+import { useToast } from "vue-toastification";
+import ConfirmForm from "@/components/forms/ConfirmForm.vue";
+import Modal from "@/components/ui/Modal.vue";
 
 const props = defineProps<{
   meeting: {
@@ -17,9 +21,16 @@ const props = defineProps<{
     roomId: string;
   };
 }>();
+
 const editFormRef = ref<InstanceType<typeof EditMeetingForm> | null>(null);
 
 const isEditable = ref(false);
+// 👈 ADDED: State for the confirmation dialog
+const isConfirmingDelete = ref(false);
+const isLoadingDelete = ref(false);
+
+const toast = useToast();
+const MEETING_URL = "api/meetings";
 
 // Format date nicely
 const formattedDate = computed(() => {
@@ -31,14 +42,59 @@ const formattedDate = computed(() => {
   });
 });
 
-function handleUpdated(updatedData: IMeetingCreate) {
-  isEditable.value = false; // close the form
-  Object.assign(props.meeting, updatedData); // update UI instantly
+function handleUpdated() {
+  isEditable.value = false; 
+}
+
+async function deleteMeeting() {
+  if (!props.meeting.id) {
+    toast.error("Cannot delete: Meeting ID is missing.");
+    isConfirmingDelete.value = false;
+    return;
+  }
+
+  isLoadingDelete.value = true;
+
+  try {
+    const response = await axios.delete<{
+      message: string;
+    }>(`${MEETING_URL}/${props.meeting.id}`);
+
+    toast.success(response.data.message || "Meeting successfully deleted!");
+    isConfirmingDelete.value = false;
+  } catch (error) {
+    console.error("Meeting deletion failed:", error);
+    const errorMessage = axios.isAxiosError(error)
+      ? error.response?.data?.message ||
+        "Failed to delete meeting. Please try again."
+      : "An unexpected error occurred during deletion.";
+    toast.error(errorMessage);
+  } finally {
+    isLoadingDelete.value = false;
+  }
 }
 </script>
 
 <template>
+  <Modal
+    v-model="isConfirmingDelete"
+    title="Confirmation Required"
+    max-width="400"
+    @update:modelValue="isConfirmingDelete = $event"
+  >
+    <ConfirmForm
+      :actionText="`deleting the meeting: ${props.meeting.title}`"
+      actionColor="red-darken-2"
+      buttonText="Delete Meeting"
+      @close="isConfirmingDelete = false"
+      @success="deleteMeeting"
+      :is-loading="isLoadingDelete"
+    />
+  </Modal>
+
+  <!-- Meeting View/Edit Content -->
   <section v-if="!isEditable">
+    <!-- ... (Existing display content) ... -->
     <div class="mb-4">
       <h1 class="text-h4 font-bold text-blue-darken-2">{{ meeting.title }}</h1>
       <p class="text-medium-emphasis mt-1">
@@ -134,7 +190,13 @@ function handleUpdated(updatedData: IMeetingCreate) {
       {{ isEditable ? "Save" : "Edit" }}
     </v-btn>
 
-    <v-btn color="red-darken-2" variant="flat">
+    <v-btn
+      @click="isConfirmingDelete = true"
+      color="red-darken-2"
+      variant="flat"
+      :loading="isLoadingDelete"
+      :disabled="isEditable"
+    >
       <v-icon start icon="mdi-delete"></v-icon>
       Delete
     </v-btn>
